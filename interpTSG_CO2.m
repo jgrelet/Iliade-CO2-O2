@@ -133,7 +133,7 @@ if error
       legend('SSPS','SSPS Interp', 'Location','SouthWest');
 
       % Sauvegarde la figure au format *.png
-      eval( ['print -dpng ' get(gcf, 'Name')]);
+      eval( ['print -dpng figs' filesep get(gcf, 'Name')]);
 
       figure(  'Name', 'SSPS_QC');
       plot( co2.DAYD, co2.SSPS_QC, 'k.');
@@ -141,7 +141,7 @@ if error
       legend('SSPS QC', 'Location','SouthWest');
 
       % Sauvegarde la figure au format *.png
-      eval( ['print -dpng ' get(gcf, 'Name')]);
+      eval( ['print -dpng figs' filesep get(gcf, 'Name')]);
 
       figure(  'Name', 'SSJT');
       % plot( tsg.DAYD, tsg.SSJT_SEL, 'k.');
@@ -152,7 +152,7 @@ if error
       legend('SSJT','SSJT Interp', 'Location','SouthWest');
 
       % Sauvegarde la figure au format *.png
-      eval( ['print -dpng ' get(gcf, 'Name')]);
+      eval( ['print -dpng figs' filesep get(gcf, 'Name')]);
 
       figure(  'Name', 'SSJT_QC');
       plot( co2.DAYD, co2.SSJT_QC, 'k.');
@@ -160,7 +160,7 @@ if error
       legend('SSJT QC', 'Location','SouthWest');
 
       % Sauvegarde la figure au format *.png
-      eval( ['print -dpng ' get(gcf, 'Name')]);
+      eval( ['print -dpng figs' filesep  get(gcf, 'Name')]);
 
       % Ecriture
       % --------
@@ -360,7 +360,7 @@ legend( legendTxt, 'Location','SouthWest');
 % legend('SSPS NoMeasure', 'SSPS ADJUSTED', 'SSPS QC = 1 ou 2' , 'SSPS NoControl', 'Location','SouthWest');
 
 % Sauvegarde la figure au format *.png
-eval( ['print -dpng ' get(gcf, 'name')]);
+eval( ['print -dpng figs' filesep get(gcf, 'name')]);
 
 end
 
