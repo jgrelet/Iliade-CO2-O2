@@ -1,5 +1,6 @@
 *.swp
 *.jpg
 *.png
+*.asv
 figs/*.jpg
 figs/*.png

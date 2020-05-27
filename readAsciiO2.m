@@ -1,4 +1,4 @@
-function [o2, error] = readAsciiO2
+function [o2, ok] = readAsciiO2(o2File, varargin)
 % readAsciiO2
 % Function to read o2 data in ASCII format.
 %
@@ -8,19 +8,26 @@ function [o2, error] = readAsciiO2
 % Output
 % ------
 % o2 ........ Structure with the relevant o2 data
-% error ...... code d'erreur
-%              1 .... tout s'est bien passé
-%             -1 .... pb d'ouverture de fichier
+% ok ........ false if there is a problem
 % 
+
+ok = false;
 
 % Sélection du fichier
 % ---------------------
-[FileIn, PathIn] = uigetfile( '*.oxy', 'Read file name', 'MultiSelect','off');
+if nargin == 1
+    fileIn = o2File;
+    [~,name,ext] = fileparts(fileIn);
+    FileIn = char([name ext]);
+    disp(char(fileIn))
+else
+    [FileIn, PathIn] = uigetfile( '*.oxy', 'Read file name', 'MultiSelect','off');
+    fileIn = char([PathIn FileIn]);
+    disp(char(fileIn))
+end
 
 % ouverture du fichier
 % --------------------
-fileIn = char([PathIn FileIn]);
-disp(char(FileIn))
 fid    = fopen( fileIn, 'r' );
 
 % Check file
@@ -28,7 +35,6 @@ fid    = fopen( fileIn, 'r' );
 if fid == -1
   msg_error = ['Open file error : ' FileIn];
   warndlg( msg_error, 'ASCII error dialog');
-  error = -1;
   return;
 end
 
@@ -36,15 +42,13 @@ end
 % --------------------------------------------
 fprintf('...reading %s : ', FileIn);
 
-
 % We can put the format in the toml file
 % it will allow to update the data input in case of equipment changes
 
 % Build of the header
 
-
-header = ["YYMMDD", "HHmmss", ...
-    "measurement", "measurement_val_1", "measurement_val_2",...
+header = ["yearmonthday", "hourminutesecond", ...
+    "measurement", "sensor_number", "serial_number",...
     "oxygen", "oxygen_val",...
     "saturation", "saturation_val",...
     "temperature", "temperature_val",...
@@ -57,33 +61,48 @@ header = ["YYMMDD", "HHmmss", ...
     "RawTem", "RawTem_val",...
     ];
 
-% At the moment we read all the data as strings
 format = '';
 for i = 1 : 25
     format = [format ' %s'];
 end
-disp(format);
-cellData = textscan( fid, format);
 
+% Read the file
+cellData = textscan( fid, format);
+% Transform the cells into a structure
 s = cell2struct(cellData, header, 2);
 
-% Get the date
-[YY, MMDD] = strtok(s.YYMMDD, '-');
-[MM, DD] = strtok(MMDD, '-');
-DD = erase(DD, '-');
-time = strtok(s.HHmmss, ':');
-[HH, mmss] = strtok(s.HHmmss, ':');
-[mm, ss] = strtok(mmss, ':');
-ss = erase(ss, ':');
+% handle of the date so we will be able to compare with CO2 data
+[year, monthday] = strtok(s.yearmonthday, '-');
+[month, day] = strtok(monthday, '-');
+day = erase(day, '-');
 
-o2.DATE = [YY MM DD HH mm ss];
-disp(o2.DATE);
+[hour, minutesecond] = strtok(s.hourminutesecond, ':');
+[minute, second] = strtok(minutesecond, ':');
+second = erase(second, ':');
+
+o2.DATE = [year month day hour minute second];
+
+%Convert the date to the date format
+year = str2double(year);
+month = str2double(month);
+day = str2double(day);
+
+hour = str2double(hour);
+minute = str2double(minute);
+second = str2double(second);
+
+o2.DAYD = datenum(year, month, day, hour, minute, second);
+
+o2.RAW_OXYGEN = str2double(s.oxygen_val);
+o2.SATURATION = str2double(s.saturation_val);
+o2.TEMPERATURE = str2double(s.temperature_val);
+
 % Close the file
 % --------------
 fclose( fid );
 
 % Everything OK
 % -------------
-error = 1;
+ok = true;
 
 end
