@@ -7,7 +7,7 @@ function [o2, error] = readAsciiO2
 %
 % Output
 % ------
-% o2 ........ Structure contenant toutes les variables des fichiers o2
+% o2 ........ Structure with the relevant o2 data
 % error ...... code d'erreur
 %              1 .... tout s'est bien passé
 %             -1 .... pb d'ouverture de fichier
@@ -36,91 +36,48 @@ end
 % --------------------------------------------
 fprintf('...reading %s : ', FileIn);
 
-% Read the header till the header line has been read
-% --------------------------------------------------
-OK = 0;
-while ~OK
 
-  % Read every line
-  % ---------------
-  line = fgetl( fid );
-  c = textscan( line, '%s');
+% We can put the format in the toml file
+% it will allow to update the data input in case of equipment changes
 
-  switch char( c{1}(1) )
+% Build of the header
 
-    case '%HEADER'
 
-      % Read the header then quit the while loop
-      % ----------------------------------------
-      %header = c{1}(2:end);
-      %nHeader = length( header );
-      %OK = 1;
+header = ["YYMMDD", "HHmmss", ...
+    "measurement", "measurement_val_1", "measurement_val_2",...
+    "oxygen", "oxygen_val",...
+    "saturation", "saturation_val",...
+    "temperature", "temperature_val",...
+    "DPhase", "DPhase_val",...
+    "BPhase", "BPhase_val",...
+    "RPhase", "RPhase_val",...
+    "BAmp", "BAmp_val",...
+    "BPot", "BPot_val",...
+    "RAmp", "RAmp_val",...
+    "RawTem", "RawTem_val",...
+    ];
 
-    otherwise
-
-      % Get the parameter Name (Delete '%')
-      % ----------------------------------
-      %Para = char( strtok(c{1}(1), '%') );
-% 
-%       % Read the parameter value
-%       % ------------------------
-%       ind = strmatch( Para, o2Names);
-%       if ~isempty( ind )
-        
-        % patch added for composed name
-        % -----------------------------
-        %a = c{1}(2:end)';
-        %str=[];
-        %for i=a
-        %  str = sprintf('%s %s', str, char(i));
-        %end
-        
-        % copy to o2 struct & remove leading and trailing white space
-        % ------------------------------------------------------------
-        %o2.(Para) = strtrim(str);
-%       end
-
-  end
+% At the moment we read all the data as strings
+format = '';
+for i = 1 : 25
+    format = [format ' %s'];
 end
+disp(format);
+cellData = textscan( fid, format);
 
-% Builld the format depending on the header parameters
-% 1 - Decimate the HEADER - The 7th first parameters are always
-%     %HEADER YEAR MNTH DAYX hh mm ss
-% 2 - The 6 Date and time parametes are read in %d
-% -------------------------------------------------------------
+s = cell2struct(cellData, header, 2);
 
+% Get the date
+[YY, MMDD] = strtok(s.YYMMDD, '-');
+[MM, DD] = strtok(MMDD, '-');
+DD = erase(DD, '-');
+time = strtok(s.HHmmss, ':');
+[HH, mmss] = strtok(s.HHmmss, ':');
+[mm, ss] = strtok(mmss, ':');
+ss = erase(ss, ':');
 
-% Read the data in a cell
-% -----------------------
-%cellData = textscan( fid, format );
-
-% Convert cell to a structure
-% ---------------------------
-%s = cell2struct(cellData, header, 2);
-
-clear cellData
-
-% Date (y m d h m s) in the first 6 elements in data
-% --------------------------------------------------
-
-% Convert date in character. This cannot be done using
-% the Matlab Serial Date format as there can be
-% some loss of precision.
-% The following instruction is not precise enough :
-% o2.DATE = datestr( o2.DAYD, 'yyyymmddHHMMSS' );
-% ------------------------------------------------------
-
-
-%   % QC should be converted in int8
-%   % ----------------------------------
-
-
-% populate o2.file structure
-% ---------------------------
-% [o2.file.pathstr, o2.file.name, o2.file.ext] = fileparts(filename);
-
-% o2.file.type = 'ASCII';
-
+o2.DATE = [YY MM DD HH mm ss];
+disp(o2.DATE);
 % Close the file
 % --------------
 fclose( fid );
