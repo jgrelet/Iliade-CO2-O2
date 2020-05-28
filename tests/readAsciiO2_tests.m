@@ -46,13 +46,13 @@ assertEqual(testCase, e_dayd, dayd(1909));
 
 %% Oxygen data test
 oxygen = o2{3};
-assertEqual(testCase,oxygen(1909) , e_oxygen);
+assertEqual(testCase, oxygen(1909), e_oxygen);
 %% Saturation data test
 saturation = o2{4};
-assertEqual(testCase,saturation(1909) , e_saturation);
+assertEqual(testCase, saturation(1909), e_saturation);
 %% Temperature data test
 temperature = o2{5};
-assertEqual(testCase,temperature(1909) , e_temperature);
+assertEqual(testCase, temperature(1909), e_temperature);
 
 
 
