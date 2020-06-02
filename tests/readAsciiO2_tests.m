@@ -7,13 +7,15 @@ function readAsciiO2_Test
 %% SETUP
 
 % EXPECTED VALUES
+%file = "C:\Users\Proprietaire\Documents\MATLAB\Iliade-CO2-O2\exemple\CSLO2001\cslo2001.oxy";
+file = "[your path to the project]\Iliade-CO2-O2\exemple\CSLO2001\cslo2001.oxy";
+
 e_year = 2020;
 e_month = 1;
 e_day = 10;
 e_hour = 9;
 e_minute = 5;
 e_second = 16;
-e_date = [e_year, e_month, e_day, e_hour e_minute e_second];
 
 e_dayd = datenum(e_year, e_month, e_day, e_hour, e_minute, e_second);
 
@@ -22,8 +24,6 @@ e_saturation = 93.02;
 e_temperature = 18.15;
 
 e_line_number = 5468;
-
-file = "C:\Users\Proprietaire\Documents\MATLAB\Iliade-CO2-O2\exemple\CSLO2001\cslo2001.oxy"
 
 testCase = matlab.unittest.TestCase.forInteractiveUse;
 %%

@@ -33,12 +33,10 @@ header = ["yearmonthday", "hourminutesecond", ...
 if nargin ~= 1 || isempty(o2File)
     [FileIn, PathIn] = uigetfile( '*.oxy', 'Read file name', 'MultiSelect','off');
     fileIn = char([PathIn FileIn]);
-    disp(char(fileIn))
 else
     fileIn = o2File;
     [~,name,ext] = fileparts(fileIn);
     FileIn = char([name ext]);
-    disp(char(fileIn))
 end
 
 % ouverture du fichier
