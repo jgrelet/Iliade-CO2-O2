@@ -22,6 +22,18 @@ function read_tests
     randomLine2001_oxy = 268.22;
     lastLine2001_oxy = 232.56;
     
+    %% Functions
+    % We check if theere is the correct number of line in the data
+    function nbLinesO2(data, expected)
+        sz = size(data.DATE, 1);
+        assertEqual(testCase, sz,expected);
+    end
+
+    % If the data is correctly read, oxygen is equal to the expected data
+    function oxygen(data, line, expected)
+        assertEqual(testCase, data.RAW_OXYGEN(line,:), expected);
+    end
+
     %% TESTS
     file = files(1,1);
     disp(file);
@@ -40,16 +52,5 @@ function read_tests
     oxygen(data,  1, firstLine2001_oxy);
     oxygen(data,  2142, randomLine2001_oxy); 
     oxygen(data,  5468, lastLine2001_oxy);
-    
-    % We check if theere is the correct number of line in the data
-    function nbLinesO2(data, expected)
-        sz = size(data.DATE, 1);
-        assertEqual(testCase, sz,expected);
-    end
-
-    % If the data is correctly read, oxygen is equal to the expected data
-    function oxygen(data, line, expected)
-        assertEqual(testCase, data.RAW_OXYGEN(line,:), expected);
-    end
 
 end
