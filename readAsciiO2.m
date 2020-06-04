@@ -1,4 +1,4 @@
-function [o2, ok] = readAsciiO2(o2File, varargin)
+function [o2, ok] = readAsciiO2(fileIn, varargin)
     % readAsciiO2
     % Function to read o2 data in ASCII format.
     %
@@ -30,13 +30,9 @@ function [o2, ok] = readAsciiO2(o2File, varargin)
 
     % File selection
     % ---------------------
-    if nargin ~= 1 || isempty(o2File)
+    if nargin ~= 1 || isempty(fileIn)
         [FileIn, PathIn] = uigetfile( '*.oxy', 'Read file name', 'MultiSelect','off');
         fileIn = char([PathIn FileIn]);
-    else
-        fileIn = o2File;
-        [~,name,ext] = fileparts(fileIn);
-        fileIn = char([name ext]);
     end
 
     % ouverture du fichier
@@ -48,7 +44,6 @@ function [o2, ok] = readAsciiO2(o2File, varargin)
     if(fid == -1)
         error('ReadAsciiO2:File not found', 'File not found');
     end
-    fclose( fid );
 
     % We can put the format in the toml file
     % it will allow to update the data input in case of equipment changes
@@ -74,7 +69,7 @@ function [o2, ok] = readAsciiO2(o2File, varargin)
     [minute, second] = strtok(minutesecond, ':');
     second = erase(second, ':');
 
-    o2.DATE = [year month day hour minute second];
+    %o2.DATE = [year month day hour minute second];
 
     %Convert the date to the date format
     year = str2double(year);

@@ -32,9 +32,9 @@ function interpTSG_CO2_O2(co2InterpFile, o2File, varargin)
         o2File = char([o2FileIn o2File]);
         disp(char(o2File))
     end
-
-    % Get the co2 data from the interpolation file
+    % Get the co2 struct from the interpolation file
     [co2, ok] = readInterpTSG_CO2(co2InterpFile);
+    
     
     if ~ok
         error('readInterpTSG_CO2');
@@ -42,44 +42,19 @@ function interpTSG_CO2_O2(co2InterpFile, o2File, varargin)
     
     % Get the o2 data
     % o2 is a struct with the following data :
-    % DATE
+    % DATE % Has been removed because it is useless
     % DAYD
     % RAW_OXYGEN
     % SATURATION
     % TEMPERATURE
-
     [o2, ok] = readAsciiO2(o2File);
-
+    
     if ~ok
         return
     end
-
-    % Conversion of the date in serial date
-    dayd = serialDate(co2);
+    [co2] = interp(co2,o2);
     
-    
-    % Definition of time borders for the interpolation of co2 and o2 data
-    
-    indmin = 1;
-    if dayd(1) < o2.DAYD(1)
-        A = find( dayd > o2.DAYD(1) );
-        if ~isempty(A)
-            indmin = A(1);
-        end
-    end
-    
-    indmax = size(dayd,1);
-    if dayd(end) > o2.DAYD(end)
-        A = find( dayd < o2.DAYD(end) );
-        if ~isempty(A)
-            indmax = A(end);
-        end
-    end
-
-    % Interpolation of o2 data at co2 position
-    co2.RAW_OXYGEN(indmin:indmax) = interp1(o2.DAYD(1:end), o2.RAW_OXYGEN(1:end), dayd(indmin:indmax));
-    %co2.SATURATION(indmin:indmax) = interp1(o2.DAYD, o2.SATURATION, dayd(indmin:indmax));
-    %co2.TEMPERATURE(indmin:indmax) = interp1(o2.DAYD, o2.TEMPERATURE, dayd(indmin:indmax));
+end
     
 % Convert the date in serial date format
 function dayd = serialDate(co2Data)
@@ -89,6 +64,43 @@ function dayd = serialDate(co2Data)
     
     format = 'dd/mm/yyyy HH:MM:SS';
     dayd = datenum(dates, format);
+    
+end
+
+function [co2] = interp(co2, o2)
+
+    PARA = {'RAW_OXYGEN', 'SATURATION', 'TEMPERATURE'};
+    % Conversion of the date in serial date
+    dayd = serialDate(co2);
+    for par = PARA
+        par = char(par);
+        co2.(par)    = ones(size(dayd));
+        
+        % Definition of time borders for the interpolation of co2 and o2 data
+    
+        indmin = 1;
+        if dayd(1) < o2.DAYD(1)
+            A = find( dayd > o2.DAYD(1) );
+            if ~isempty(A)
+                indmin = A(1);
+            end
+        end
+
+        indmax = size(dayd,1);
+        if dayd(end) > o2.DAYD(end)
+            A = find( dayd < o2.DAYD(end) );
+            if ~isempty(A)
+                indmax = A(end);
+            end
+        end
+        
+        co2.(par)(indmin:indmax) = interp1(o2.DAYD, o2.(par), dayd(indmin:indmax));
+        
+    end % end for
+    
+    disp(co2.RAW_OXYGEN);
+    
+end
     
     
 
