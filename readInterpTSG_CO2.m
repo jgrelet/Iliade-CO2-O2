@@ -1,16 +1,15 @@
 % Get the co2 data from the previous interpolation
-function [co2Data, ok] = readInterpTSG_CO2(fileIn, varargin)
+function [co2, ok] = readInterpTSG_CO2(fileIn, varargin)
 
     if nargin ~= 1 || isempty(fileIn)
-        [FileIn, PathIn] = uigetfile( '*.oxy', 'Read file name', 'MultiSelect','off');
+        [FileIn, PathIn] = uigetfile( '*.csv', 'Read file name', 'MultiSelect','off');
         fileIn = char([PathIn FileIn]);
-    else
-        [~,name,ext] = fileparts(fileIn);
-        fileIn = char([name ext]);
     end
     
+    % File opening check
     fid    = fopen( fileIn, 'r' );
     if(fid == -1)
+        ok = false;
         error('File not found');
     end
     fclose( fid );
@@ -41,6 +40,12 @@ function [co2Data, ok] = readInterpTSG_CO2(fileIn, varargin)
     co2Data(1,:) = [];
     co2Data(:,36) = [];
     
-    co2Data = table2struct(co2Data);
+    co2 = struct;
+    % Manual conversion to structure
+    % table2struct format does not produce a good structure
+    for i = 1:size(varNames,2)
+        co2.(char(varNames(i))) = co2Data.(char(varNames(i)));
+    end
     
     ok = true;
+end
