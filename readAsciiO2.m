@@ -36,7 +36,7 @@ function [o2, ok] = readAsciiO2(o2File, varargin)
     else
         fileIn = o2File;
         [~,name,ext] = fileparts(fileIn);
-        FileIn = char([name ext]);
+        fileIn = char([name ext]);
     end
 
     % ouverture du fichier
@@ -45,11 +45,10 @@ function [o2, ok] = readAsciiO2(o2File, varargin)
 
     % Check file
     % -----------
-    if fid == -1
-      msg_error = ['Open file error : ' FileIn];
-      warndlg( msg_error, 'ASCII error dialog');
-      return;
+    if(fid == -1)
+        error('ReadAsciiO2:File not found', 'File not found');
     end
+    fclose( fid );
 
     % We can put the format in the toml file
     % it will allow to update the data input in case of equipment changes

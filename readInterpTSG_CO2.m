@@ -1,6 +1,20 @@
 % Get the co2 data from the previous interpolation
-function [co2Data, ok] = readInterpTSG_CO2(fileIn)
+function [co2Data, ok] = readInterpTSG_CO2(fileIn, varargin)
 
+    if nargin ~= 1 || isempty(fileIn)
+        [FileIn, PathIn] = uigetfile( '*.oxy', 'Read file name', 'MultiSelect','off');
+        fileIn = char([PathIn FileIn]);
+    else
+        [~,name,ext] = fileparts(fileIn);
+        fileIn = char([name ext]);
+    end
+    
+    fid    = fopen( fileIn, 'r' );
+    if(fid == -1)
+        error('File not found');
+    end
+    fclose( fid );
+    
     % Read the file
     varNames = {'DATE_TIME', 'GPS_TIME', 'TYPE', 'ERROR', 'LATX', 'LONX',...
                 'LATX_INT','LONX_INT',...

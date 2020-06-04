@@ -24,33 +24,20 @@ function interpTSG_CO2_O2(co2InterpFile, o2File, varargin)
         
         [co2InterpFile, co2FileIn] = uigetfile( '*.csv', 'Read file name', 'MultiSelect','off');
         
-        if co2InterpFile == 0
-          msg_error = ['Open file error : ' FileIn];
-          warndlg( msg_error, 'Open file');
-          return;
-        end
-        
         co2InterpFile = char([co2FileIn co2InterpFile]);
         disp(char(co2InterpFile))
         
         [o2File, o2FileIn] = uigetfile( '*.oxy', 'Read file name', 'MultiSelect','off');
-        
-        if o2File == 0
-          msg_error = ['Open file error : ' FileIn];
-          warndlg( msg_error, 'Open file');
-          return;
-        end
         
         o2File = char([o2FileIn o2File]);
         disp(char(o2File))
     end
 
     % Get the co2 data from the interpolation file
-    [co2Data, ok] = readInterpTSG_CO2(co2InterpFile);
-    co2 = table2struct(co2Data);
+    [co2, ok] = readInterpTSG_CO2(co2InterpFile);
     
     if ~ok
-        return
+        error('readInterpTSG_CO2');
     end
     
     % Get the o2 data
@@ -90,7 +77,7 @@ function interpTSG_CO2_O2(co2InterpFile, o2File, varargin)
     end
 
     % Interpolation of o2 data at co2 position
-    %co2.RAW_OXYGEN(indmin:indmax) = interp1(o2.DAYD, o2.RAW_OXYGEN, dayd(indmin:indmax));
+    co2.RAW_OXYGEN(indmin:indmax) = interp1(o2.DAYD(1:end), o2.RAW_OXYGEN(1:end), dayd(indmin:indmax));
     %co2.SATURATION(indmin:indmax) = interp1(o2.DAYD, o2.SATURATION, dayd(indmin:indmax));
     %co2.TEMPERATURE(indmin:indmax) = interp1(o2.DAYD, o2.TEMPERATURE, dayd(indmin:indmax));
     
