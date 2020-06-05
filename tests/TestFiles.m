@@ -10,6 +10,11 @@ classdef TestFiles < matlab.unittest.TestCase
             '../exemple/CSLO2001/cslo2001.bad' };
     end
     
+    methods(TestMethodSetup)
+        function pathHandling(testCase)
+            addpath("../");
+        end
+    end
     
     methods(Test)
         
@@ -64,6 +69,24 @@ classdef TestFiles < matlab.unittest.TestCase
              testCase.verifyEqual(data.RAW_OXYGEN(1), first);
             testCase.verifyEqual(data.RAW_OXYGEN(2142), random);
             testCase.verifyEqual(data.RAW_OXYGEN(end), last);
+        end
+        
+        function readCo2(testCase)
+            first = 14360600.00;
+            random = 15043466.00; % Line 11886
+            last = 14883855.00;
+            [data, ~] = readInterpTSG_CO2(testCase.trueFiles{3});
+            testCase.verifyEqual(data.CO2_RAW(1), first);
+            testCase.verifyEqual(data.CO2_RAW(11885), random);
+            testCase.verifyEqual(data.CO2_RAW(end), last);
+            
+            first = 13427429.00;
+            random = 14268601.00; % Line 13847
+            last = 14253565.00;
+            [data, ~] = readInterpTSG_CO2(testCase.trueFiles{4});
+            testCase.verifyEqual(data.CO2_RAW(1), first);
+            testCase.verifyEqual(data.CO2_RAW(13846), random);
+            testCase.verifyEqual(data.CO2_RAW(end), last);
         end
     end
     
