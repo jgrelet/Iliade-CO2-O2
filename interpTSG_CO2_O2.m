@@ -44,7 +44,7 @@ function interpTSG_CO2_O2(co2InterpFile, o2File, varargin)
     % o2 is a struct with the following data :
     % DATE % Has been removed because it is useless
     % DAYD
-    % RAW_OXYGEN
+    % OXYGEN_RAW
     % SATURATION
     % TEMPERATURE
     [o2, ok] = readAsciiO2(o2File);
@@ -69,7 +69,7 @@ end
 
 function [co2] = interp(co2, o2)
 
-    PARA = {'RAW_OXYGEN', 'SATURATION', 'TEMPERATURE'};
+    PARA = {'OXYGEN_RAW', 'SATURATION', 'TEMPERATURE'};
     % Conversion of the date in serial date
     dayd = serialDate(co2);
     for par = PARA
