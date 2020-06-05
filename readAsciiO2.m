@@ -82,7 +82,7 @@ function [o2, ok] = readAsciiO2(fileIn, varargin)
 
     o2.DAYD = datenum(year, month, day, hour, minute, second);
 
-    o2.RAW_OXYGEN = str2double(s.oxygen_val);
+    o2.OXYGEN_RAW = str2double(s.oxygen_val);
     o2.SATURATION = str2double(s.saturation_val);
     o2.TEMPERATURE = str2double(s.temperature_val);
 

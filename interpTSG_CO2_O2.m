@@ -98,7 +98,7 @@ function [co2] = interp(co2, o2)
         
     end % end for
     
-    disp(co2.RAW_OXYGEN);
+    disp(co2.OXYGEN_RAW);
     
 end
     

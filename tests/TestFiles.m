@@ -58,17 +58,17 @@ classdef TestFiles < matlab.unittest.TestCase
             random = 0.02; % Line 8870
             last = 234.00;
             [data, ~] = readAsciiO2(testCase.trueFiles{1});
-            testCase.verifyEqual(data.RAW_OXYGEN(1), first);
-            testCase.verifyEqual(data.RAW_OXYGEN(8870), random);
-            testCase.verifyEqual(data.RAW_OXYGEN(end), last);
+            testCase.verifyEqual(data.OXYGEN_RAW(1), first);
+            testCase.verifyEqual(data.OXYGEN_RAW(8870), random);
+            testCase.verifyEqual(data.OXYGEN_RAW(end), last);
             
             first = 308.18;
             random = 268.22; % Line 2142
             last = 232.56;
             [data, ~] = readAsciiO2(testCase.trueFiles{2});
-             testCase.verifyEqual(data.RAW_OXYGEN(1), first);
-            testCase.verifyEqual(data.RAW_OXYGEN(2142), random);
-            testCase.verifyEqual(data.RAW_OXYGEN(end), last);
+             testCase.verifyEqual(data.OXYGEN_RAW(1), first);
+            testCase.verifyEqual(data.OXYGEN_RAW(2142), random);
+            testCase.verifyEqual(data.OXYGEN_RAW(end), last);
         end
         
         function readCo2(testCase)
