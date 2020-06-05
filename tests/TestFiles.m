@@ -16,9 +16,16 @@ classdef TestFiles < matlab.unittest.TestCase
         end
     end
     
+    methods(TestMethodTeardown)
+        function deleteTests(testCase)
+            delete('*.csv');
+        end
+    end
+    
     methods(Test)
         
         function openFiles(testCase)
+            % Check if the files are found
             
             for i = testCase.trueFiles
                 disp(char(i));
@@ -36,6 +43,8 @@ classdef TestFiles < matlab.unittest.TestCase
         end   
         
         function lineNumber(testCase)
+            % Check the number of lines read
+            
             % cslo1902.oxy
             [data, ~] = readAsciiO2(testCase.trueFiles{1});
             testCase.verifyEqual(size(data.DAYD,1), 15354);
@@ -54,6 +63,7 @@ classdef TestFiles < matlab.unittest.TestCase
         end   
         
         function readOxygen(testCase)
+            % Check if we correctly read the data from o2 file
             first = 310.33;
             random = 0.02; % Line 8870
             last = 234.00;
@@ -72,6 +82,7 @@ classdef TestFiles < matlab.unittest.TestCase
         end
         
         function readCo2(testCase)
+            % Check if we correctly read the data from co2 file
             first = 14360600.00;
             random = 15043466.00; % Line 11886
             last = 14883855.00;
@@ -88,6 +99,7 @@ classdef TestFiles < matlab.unittest.TestCase
             testCase.verifyEqual(data.CO2_RAW(13846), random);
             testCase.verifyEqual(data.CO2_RAW(end), last);
         end
+        
     end
     
 end
