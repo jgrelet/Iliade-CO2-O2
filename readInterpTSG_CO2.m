@@ -46,6 +46,7 @@ function [co2, ok] = readInterpTSG_CO2(fileIn, varargin)
     for i = 1:size(varNames,2)
         co2.(char(varNames(i))) = co2Data.(char(varNames(i)));
     end
+    co2.DAYD = serialDate(co2);
     
     ok = true;
 end

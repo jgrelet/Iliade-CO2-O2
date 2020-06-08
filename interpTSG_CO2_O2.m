@@ -52,7 +52,7 @@ function interpTSG_CO2_O2(co2interpCo2_O2File, o2File, varargin)
         return
     end
     [co2] = interpCo2_O2(co2,o2);
-    
+    co2.OXYGEN_ADJ = ones(size(co2.SSJT));
     % Adjusting O2 DATA
     
     % Figure ?
@@ -65,8 +65,9 @@ function interpTSG_CO2_O2(co2interpCo2_O2File, o2File, varargin)
                 'EQU_PUMP;VENT_FLOW;COND_T;COND_ATM;COND_EQU;'...
                 'DRIP_1;DRIP_2;DRY_BOX_T;DECK_BOX_T;'...
                 'SSPS;SSPS_QC;SSJT;SSJT_QC;SSJT_COR;EQU_T_COR;'...
-                'OXYGEN_RAW;OXYGEN_ADJ;SATURATION;O2_TEMPERATURE;'...
+                'OXYGEN_RAW;SATURATION;O2_TEMPERATURE;'...
                 ];
+                %'OXYGEN_RAW;OXYGEN_ADJ;SATURATION;O2_TEMPERATURE;'...
             
     StrucOrder = {'DAYD';'DATE';'GPS_TIME';'TYPE';'ERROR';'LATX';'LONX';...
                 'LATX_INT';'LONX_INT';...
@@ -75,8 +76,10 @@ function interpTSG_CO2_O2(co2interpCo2_O2File, o2File, varargin)
                 'EQU_PUMP';'VENT_FLOW';'COND_T';'COND_ATM';'COND_EQU';...
                 'DRIP_1';'DRIP_2';'DRY_BOX_T';'DECK_BOX_T';...
                 'SSPS';'SSPS_QC';'SSJT';'SSJT_QC';'SSJT_COR';'EQU_T_COR';...
-                'OXYGEN_RAW';'OXYGEN_ADJ';'SATURATION';'O2_TEMPERATURE'...
+                'OXYGEN_RAW';'OXYGEN_ADJ';'SATURATION';'TEMPERATURE'...
                 };
+            
+                %'OXYGEN_RAW';'OXYGEN_ADJ';'SATURATION';'O2_TEMPERATURE'...
             
     formatOut = ['%02d/%02d/%4d %02d:%02d:%02d;'...
                 '%s; %s; %d;%.4f;%.4f;'...
@@ -86,9 +89,11 @@ function interpTSG_CO2_O2(co2interpCo2_O2File, o2File, varargin)
                 '%.3f;%.0f;%.3f;%.0f;%.2f;%.2f;'...
                 '%.2f;%.2f;%.2f;%.2f;'...
                 '\n'];
+                %'%.2f;%.2f;%.2f;%.2f;'...
             
-    
-    [FileOut,PathOut] = uiputfile('*.csv','Fichier en écriture');
+    %[FileOut,PathOut] = uiputfile('*.csv','Fichier en écriture');
+    FileOut = 'test.csv';
+    PathOut = 'C:\Users\Proprietaire\Documents\MATLAB\Iliade-CO2-O2\';
     fidOut = fopen( [PathOut FileOut], 'w' );
     
     
@@ -96,27 +101,26 @@ function interpTSG_CO2_O2(co2interpCo2_O2File, o2File, varargin)
         msg_error = ['Open file error : ' FileOut];
         warndlg( msg_error, 'ASCII error dialog');
     else
-        
-        disp(class(co2));
-        fclose(fidOut);
-        return
+        disp(co2);
+        disp(StrucOrder);
         co2b = orderfields(co2, StrucOrder);
 
-        c = struct2cell(co2b);
+        c = struct2cell(co2);
         % Number of columns
         n = size(c,1);
         % Number of line 
         m = size(c{1},1);
 
         x = cell2mat(c(5:n));
+        
         y = reshape(x,m,n-4);
 
         [Y, M, D, H, MN, S] = datevec(c{1});
         date = [D,M,Y,H,MN,S];
 
-        %fprintf( fidOut,'%s\n', HeaderOut);
+        fprintf( fidOut,'%s\n', HeaderOut);
         for i=1:m
-        %    fprintf( fidOut, formatOut, date(i,:), co2.GPS_TIME(i,:), co2.TYPE(i,:),y(i,:));
+            %fprintf( fidOut, formatOut, date(i,:), co2.GPS_TIME(i,:), co2.TYPE(i,:),y(i,:));
         end
         
         fclose(fidOut);
@@ -167,17 +171,6 @@ function [co2] = interpCo2_O2(co2, o2)
         co2.(par)(indmin:indmax) = interp1(o2.DAYD, o2.(par), dayd(indmin:indmax));
         
     end % end for
-end
-
-function dayd = serialDate(co2Data)
-    % Convert the date in serial date format
-    % dd/mm/yyyy hh:mm:ss
-    dates = char(co2Data.DATE_TIME);
-    %disp(dates);
-    
-    format = 'dd/mm/yyyy HH:MM:SS';
-    dayd = datenum(dates, format);
-    
 end
     
 
