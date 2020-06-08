@@ -112,14 +112,14 @@ function interpTSG_CO2_O2(co2interpCo2_O2File, o2File, varargin)
         m = size(c{1},1);
 
         x = cell2mat(c(5:n));
-
+        x = reshape(x,m,n-4);
         [Y, M, D, H, MN, S] = datevec(c{1});
         date = [D,M,Y,H,MN,S];
 
         fprintf( fidOut,'%s\n', HeaderOut);
+        disp(size(x));
         for i=1:m
-            fprintf( fidOut, formatOut, date(i,:), gps_time(i,:),...
-                type(i,:),x(i,:));
+            fprintf( fidOut, formatOut, date(i,:), gps_time(i,:), type(i,:),x(i,:));
         end
         
         fclose(fidOut);
