@@ -42,11 +42,10 @@ function [co2, ok] = readInterpTSG_CO2(fileIn, varargin)
     
     co2 = struct;
     % Manual conversion to structure
-    % table2struct format does not produce a good structure
+    % table2struct format do not produce a good structure
     for i = 1:size(varNames,2)
         co2.(char(varNames(i))) = co2Data.(char(varNames(i)));
     end
-    co2.DAYD = serialDate(co2);
     
     ok = true;
 end
