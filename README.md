@@ -89,7 +89,41 @@ the results is :
        6.8135 seconds testing time.
 
 ### Interpolation module
-(WIP)
+This fie test the following function
+- interpCo2_O2
+
+Note that it's highly recommended to run the previous test before running this one as it use readinterpTSC_CO2 and readAsciiO2
+>> runtests('testFiles')
+
+You can run all testFiles tests with :
+
+>> runtests('testInterpolation')
+
+
+the results is :
+
+    Running TestInterpolation
+    Test with ../exemple/CSLO1902/cslo1902.oxy and ../exemple/CSLO1902/cslo1902.csv
+    Test with ../exemple/CSLO2001/cslo2001.oxy and ../exemple/CSLO2001/cslo2001.csv
+    .
+    Done TestInterpolation
+    __________
+
+
+    ans = 
+
+      TestResult with properties:
+
+              Name: 'TestInterpolation/interpolationTest'
+            Passed: 1
+            Failed: 0
+        Incomplete: 0
+          Duration: 3.4632
+           Details: [1×1 struct]
+
+    Totals:
+       1 Passed, 0 Failed, 0 Incomplete.
+       3.4632 seconds testing time.
 
 ### O2 compensation module
 (WIP)
