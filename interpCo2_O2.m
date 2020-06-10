@@ -1,6 +1,6 @@
 function [co2] = interpCo2_O2(co2, o2)
 
-    PARA = {'OXYGEN_RAW', 'SATURATION', 'TEMPERATURE'};
+    PARA = {'OXYGEN_RAW', 'OXYGEN_SATURATION', 'OXYGEN_TEMPERATURE'};
     % Conversion of the date in serial date
     format = 'dd/mm/yyyy HH:MM:SS';
     co2.DAYD = datenum(co2.DATE_TIME, format);
@@ -9,11 +9,11 @@ function [co2] = interpCo2_O2(co2, o2)
         
         switch par
             case 'OXYGEN_RAW'
-                defaultPARA = -1;
-            case 'SATURATION'
-                defaultPARA = -1;
-            case 'TEMPERATURE'
-                defaultPARA = -1;
+                defaultPARA = -999;
+            case 'OXYGEN_SATURATION'
+                defaultPARA = -999;
+            case 'OXYGEN_TEMPERATURE'
+                defaultPARA = -999;
             otherwise
                 disp('Nom de variable inconnu');
                 return;

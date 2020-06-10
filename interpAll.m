@@ -44,17 +44,20 @@ function interpAll(co2interpCo2_O2File, o2File, varargin)
     % DATE % Has been removed because it is useless
     % DAYD
     % OXYGEN_RAW
-    % SATURATION
-    % TEMPERATURE
+    % OXYGEN_SATURATION
+    % OXYGEN_TEMPERATURE
     [o2, ok] = readAsciiO2(o2File);
     
     if ~ok
         return
     end
+    disp("CO2 O2 interpolation...");
     [co2] = interpCo2_O2(co2,o2);
-    % Adjusting O2 DATA
     
-    % Figure ?
+    % Adjusting O2 DATA
+    % default salinity setting is 0
+    disp("Correcting O2 Data...");
+    %[co2] = correctO2Data(co2, 0);
     
     writeInterpolation(co2)
 end

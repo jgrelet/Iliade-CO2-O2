@@ -1,5 +1,5 @@
 classdef TestFiles < matlab.unittest.TestCase
-    % TestFiles an example test
+    % TestFiles I/O files tests
     
     properties
         trueFiles = {'../exemple/CSLO1902/cslo1902.oxy',...
