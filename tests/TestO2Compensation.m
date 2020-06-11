@@ -9,7 +9,8 @@ classdef TestO2Compensation < matlab.unittest.TestCase
     
     methods(TestMethodSetup)
         function pathHandling(testCase)
-            addpath("../");
+            addpath("../O2_CO2");
+            addpath("../TSG_CO2");
         end
     end
     
@@ -19,11 +20,7 @@ classdef TestO2Compensation < matlab.unittest.TestCase
     
     methods(Test)
         function compensationTest(testCase)
-            
-%             [co2, ~] = readInterpTSG_CO2(testCase.files{3});
-%             [o2, ~] = readAsciiO2(testCase.files{1});
-%             [co2] = interpCo2_O2(co2,o2);
-            
+            % without depth
             co2.OXYGEN_RAW = [278.0];
             co2.SSPS = [0];
             co2.SSJT = [20];
@@ -40,6 +37,3 @@ classdef TestO2Compensation < matlab.unittest.TestCase
     end
 end
 
-            %[co2, ~] = readInterpTSG_CO2(testCase.files{3});
-            %[o2, ~] = readAsciiO2(testCase.files{1});
-            %[co2] = interpCo2_O2(co2,o2);

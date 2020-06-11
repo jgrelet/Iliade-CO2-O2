@@ -1,4 +1,4 @@
-function [co2] = interpCo2_O2(co2, o2)
+function [co2] = interpolation(co2, o2)
 
     PARA = {'OXYGEN_RAW', 'OXYGEN_SATURATION', 'OXYGEN_TEMPERATURE'};
     % Conversion of the date in serial date

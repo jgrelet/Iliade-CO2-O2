@@ -1,4 +1,4 @@
-function interpAll(co2interpCo2_O2File, o2File, varargin)
+function interpCO2_O2(co2interpCo2_O2File, o2File, varargin)
     %
     % interpCo2_O2olation of O2 measure at co2 dates.
     % At the end, we will add the following columns to the .csv:
@@ -52,12 +52,12 @@ function interpAll(co2interpCo2_O2File, o2File, varargin)
         return
     end
     disp("CO2 O2 interpolation...");
-    [co2] = interpCo2_O2(co2,o2);
+    [co2] = interpolation(co2,o2);
     
     % Adjusting O2 DATA
     % default salinity setting is 0
     disp("Correcting O2 Data...");
-    %[co2] = correctO2Data(co2, 0);
+    [co2] = correctO2Data(co2, 0);
     
     writeInterpolation(co2)
 end

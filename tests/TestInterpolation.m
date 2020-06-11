@@ -2,15 +2,16 @@ classdef TestInterpolation < matlab.unittest.TestCase
     % Test
     
     properties
-        files = {'../exemple/CSLO1902/cslo1902.oxy',...
-            '../exemple/CSLO2001/cslo2001.oxy', ...
-            '../exemple/CSLO1902/cslo1902.csv', ...
-            '../exemple/CSLO2001/cslo2001.csv' };
+        files = {'exemple/CSLO1902/cslo1902.oxy',...
+            'exemple/CSLO2001/cslo2001.oxy', ...
+            'exemple/CSLO1902/cslo1902.csv', ...
+            'exemple/CSLO2001/cslo2001.csv' };
     end
     
     methods(TestMethodSetup)
         function pathHandling(testCase)
-            addpath("../");
+            addpath("../O2_CO2");
+            addpath("../TSG_CO2");
         end
     end
     
@@ -24,7 +25,7 @@ classdef TestInterpolation < matlab.unittest.TestCase
             %% Tests on cslo1902
             [co2, ~] = readInterpTSG_CO2(testCase.files{3});
             [o2, ~] = readAsciiO2(testCase.files{1});
-            [co2] = interpCo2_O2(co2,o2);
+            [co2] = interpolation(co2,o2);
             
             disp(strcat("Test with ", testCase.files{1}, " and ", testCase.files{3}));
             % co2 data starts at 2019-03-31 13:40:30 in cslo1902
@@ -44,7 +45,7 @@ classdef TestInterpolation < matlab.unittest.TestCase
             disp(strcat("Test with ", testCase.files{2}, " and ", testCase.files{4}));
             [co2, ~] = readInterpTSG_CO2(testCase.files{4});
             [o2, ~] = readAsciiO2(testCase.files{2});
-            [co2] = interpCo2_O2(co2,o2);
+            [co2] = interpolation(co2,o2);
             % co2 data starts at 2020-01-03 17:40:27 in cslo2001
             % oxy data starts at 2020-01-03 18:05:24 in cslo2001
             % co2 data ends at 2020-02-26 08:52:06 in cslo2001

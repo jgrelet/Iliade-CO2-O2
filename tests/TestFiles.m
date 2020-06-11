@@ -2,17 +2,18 @@ classdef TestFiles < matlab.unittest.TestCase
     % TestFiles I/O files tests
     
     properties
-        trueFiles = {'../exemple/CSLO1902/cslo1902.oxy',...
-            '../exemple/CSLO2001/cslo2001.oxy', ...
-            '../exemple/CSLO1902/cslo1902.csv', ...
-            '../exemple/CSLO2001/cslo2001.csv' };
-        badFiles = {'../exemple/CSLO1902/cslo1902.bad',...
-            '../exemple/CSLO2001/cslo2001.bad' };
+        trueFiles = {'exemple/CSLO1902/cslo1902.oxy',...
+            'exemple/CSLO2001/cslo2001.oxy', ...
+            'exemple/CSLO1902/cslo1902.csv', ...
+            'exemple/CSLO2001/cslo2001.csv' };
+        badFiles = {'exemple/CSLO1902/cslo1902.bad',...
+            'exemple/CSLO2001/cslo2001.bad' };
     end
     
     methods(TestMethodSetup)
         function pathHandling(testCase)
-            addpath("../");
+            addpath("../O2_CO2");
+            addpath("../TSG_CO2");
         end
     end
     
@@ -63,7 +64,7 @@ classdef TestFiles < matlab.unittest.TestCase
         end   
         
         function readOxygen(testCase)
-            disp(strcat('Check if we correctly read the data from ', testCase.trueFiles{1}));
+            disp(strcat("Check if we correctly read the data from ", testCase.trueFiles{1}));
             first = 310.33;
             random = 0.02; % Line 8870
             last = 234.00;
@@ -71,7 +72,7 @@ classdef TestFiles < matlab.unittest.TestCase
             testCase.verifyEqual(data.OXYGEN_RAW(1), first);
             testCase.verifyEqual(data.OXYGEN_RAW(8870), random);
             testCase.verifyEqual(data.OXYGEN_RAW(end), last);
-            disp(strcat('Check if we correctly read the data from ', testCase.trueFiles{2}));
+            disp(strcat("Check if we correctly read the data from ", testCase.trueFiles{2}));
             first = 308.18;
             random = 268.22; % Line 2142
             last = 232.56;
@@ -82,7 +83,7 @@ classdef TestFiles < matlab.unittest.TestCase
         end
         
         function readCo2(testCase)
-            disp(strcat('Check if we correctly read the data from ', testCase.trueFiles{3}));
+            disp(strcat("Check if we correctly read the data from ", testCase.trueFiles{3}));
             first = 14360600.00;
             random = 15043466.00; % Line 11886
             last = 14883855.00;
@@ -91,7 +92,7 @@ classdef TestFiles < matlab.unittest.TestCase
             testCase.verifyEqual(data.CO2_RAW(11885), random);
             testCase.verifyEqual(data.CO2_RAW(end), last);
             
-            disp(strcat('Check if we correctly read the data from ', testCase.trueFiles{3}));
+            disp(strcat("Check if we correctly read the data from ", testCase.trueFiles{3}));
             first = 13427429.00;
             random = 14268601.00; % Line 13847
             last = 14253565.00;

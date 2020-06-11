@@ -2,6 +2,7 @@
 *.jpg
 *.png
 *.asv
+*.txt
 figs/*.jpg
 figs/*.png
 
