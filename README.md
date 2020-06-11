@@ -11,8 +11,8 @@ The application is made of two phases:
 
 First, you have to run
 
-```bash
-interpTSG_CO2
+```matlab
+>> interpTSG_CO2
 ```
 
 * The first file you have to choose is the CO2 file
@@ -22,7 +22,7 @@ interpTSG_CO2
 When it's done, you can then run
 
 ```bash
-interpAll
+>> interpAll
 ```
 
 * The first file you have to choose is the previous interpolation result
@@ -35,30 +35,32 @@ interpAll will internally call interpCo2_O2 and correctO2Data
 
 You can run all the tests from the project folder with
 
-```bash
-runtests('tests')
+```matlab
+>> runtests('tests')
 ```
 
 For more details about them, move yourself to the tests folder by running the following command in the command prompt:
 
-```bash
-cd tests
+```matlab
+>> cd tests
 ```
 
 then, run
 
-```bash
-ls
+```matlab
+>> ls
 ```
 
 The following file should be there :
 
 * TestFiles.m
-* TFigureProperties.m
+* TestO2Compensation.m
+* TestInterpolation.m
+
 
 ### Reading module : TestFiles
 
-This fie test the following functions
+This file test the following functions
 
 * readAsciiO2
 * readInterpTSG_CO2
@@ -66,14 +68,14 @@ This fie test the following functions
 
 You can run all testFiles tests with :
 
-```bash
-runtests('TestFiles')
+```matlab
+>> runtests('TestFiles')
 ```
 
 or a specific test of the file :
 
-```bash
-runtests('TestFiles','ProcedureName','readCo2')
+```matlab
+>> runtests('TestFiles','ProcedureName','readCo2')
 ```
 
 the results is :
@@ -123,19 +125,19 @@ This fie test the following function
 
 Note that it's highly recommended to run the previous test before running this one as it use readinterpTSC_CO2 and readAsciiO2
 
-```bash
-runtests('testFiles')
+```matlab
+>> runtests('testFiles')
 ```
 
 You can run all testFiles tests with :
 
-```bash
-runtests('testInterpolation')
+```matlab
+>> runtests('testInterpolation')
 ```
 
 the results is :
 
-```bash
+```text
 Running TestInterpolation
 Test with ../exemple/CSLO1902/cslo1902.oxy and ../exemple/CSLO1902/cslo1902.csv
 Test with ../exemple/CSLO2001/cslo2001.oxy and ../exemple/CSLO2001/cslo2001.csv
