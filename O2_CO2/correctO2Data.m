@@ -68,10 +68,11 @@ function [co2] = correctO2Data(co2, salinity, depth, varargin)
     
     disp("Writing data to structure ...");
     co2.OXYGEN_ADJ_muM = -999 * ones(size(co2.SSJT)); % default value
-    co2.OXYGEN_ADJ_muM = o2Concentration_muM;
     co2.OXYGEN_ADJ_MLL = -999 * ones(size(co2.SSJT)); % default value
+    
+    co2.OXYGEN_ADJ_muM = o2Concentration_muM;
+    
     co2.OXYGEN_ADJ_MLL = o2Concentration_MLL;
+    
     co2.OXYGEN_SATURATION = o2Saturation;
-    
-    
 end
