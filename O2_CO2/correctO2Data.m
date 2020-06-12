@@ -80,6 +80,4 @@ function [co2] = correctO2Data(co2, salinity, depth, varargin)
     co2.OXYGEN_ADJ_MLL(ind) = o2Concentration_MLL;
     
     co2.OXYGEN_SATURATION(ind) = o2Saturation;
-    
-    disp(co2);
 end

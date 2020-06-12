@@ -10,13 +10,15 @@ function interpFile = writeInterpolation(co2)
                 'OXYGEN_RAW;OXYGEN_ADJ_muM;OXYGEN_ADJ_MLL;OXYGEN_SATURATION;OXYGEN_TEMPERATURE;'...
                 ];
 
-    formatOut = ['%02d/%02d/%4d %02d:%02d:%02d;'...
-                '%s; %s; %d;%.4f;%.4f;'...
-                '%.4f;%.4f;'...
-                '%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;'...
-                '%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;'...
-                '%.3f;%.0f;%.3f;%.0f;%.2f;%.2f;'...
-                '%.2f;%.2f;%.2f;%.2f;%.2f;'...
+    formatOut = ['%02d/%02d/%4d %02d:%02d:%02d;'... % DATE_TIME
+                '%s; %s; %d;%.4f;%.4f;'... % GPS_TIME TYPE ERROR LATX LONX
+                '%.4f;%.4f;'... % LATX_INT LONX_INT;
+                '%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;'... % EQU_T STD CO2_RAW CO2_PHYS H2O_RAW H2O_PHYS
+                '%.2f;%.2f;%.2f;%.2f;%.2f;%.2f;'... % LICOR_T LICOR_P ATM_P EQU_P H2O_FLOW LICOR_FLOW
+                '%.2f;%.2f;%.2f;%.2f;%.2f;'... % EQU_PUMP VENT_FLOW COND_T COND_ATM COND_EQU
+                '%.2f;%.2f;%.2f;%.2f;'... % DRIP_1 DRIP_2 DRY_BOX_T DECK_BOX_T 
+                '%.3f;%.0f;%.3f;%.0f;%.2f;%.2f;' ... %SSPS SSPS_QC SSJT SSJT_QC SSJT_COR EQU_T_COR 
+                '%.2f;%.2f;%.2f;%.2f;%.2f;'... %OXYGEN_RAW OXYGEN_ADJ_muM OXYGEN_ADJ_MLL OXYGEN_SATURATION OXYGEN_TEMPERATURE
                 '\n'];
                 
     [FileOut,PathOut] = uiputfile('*.csv','Fichier en écriture');
@@ -41,8 +43,7 @@ function interpFile = writeInterpolation(co2)
         % Data extraction of integers and reshape of the matrix
         x = cell2mat(c(5:n));
         x = reshape(x,m,n-4);
-        
-        [Y, M, D, H, MN, S] = datevec(c{1});
+        [Y, M, D, H, MN, S] = datevec(c{1}, 'dd/mm/yyyy HH:MM:SS');
         date = [D,M,Y,H,MN,S];
 
         fprintf( fidOut,'%s\n', HeaderOut);

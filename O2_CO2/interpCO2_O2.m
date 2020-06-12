@@ -59,7 +59,7 @@ function interpFile = interpCO2_O2(co2interpCo2_O2File, o2File, varargin)
     disp("Correcting O2 Data...");
     [co2] = correctO2Data(co2, 0, 0);
     
-    writeInterpolation(co2);
+    interpFile = writeInterpolation(co2);
 end
 
     
