@@ -10,10 +10,10 @@ In order to run the program, you will need the following files:
 * tsg data file with .tsgqc format
 * o2 data file with .oxy format
 
-The program will run two different phases:
+There is two parts in the program:
 
-* CO2 and TSG interpolation in TSG_CO2 folder
-* CO2/TSG and O2 interpolation in O2_CO2 folder
+* CO2 and TSG interpolation, in TSG_CO2 folder
+* CO2/TSG and O2 interpolation, in O2_CO2 folder
 
 There one function that rule them all : main which is at the root of the project
 So if you want to run both interpolation at once, you can run the following command:
@@ -97,6 +97,14 @@ You can run all the tests from the project folder with
 >> runtests('tests')
 ```
 
+This will test the following functions:
+
+* readAsciiO2
+* readInterpTSG_CO2
+* writeInterpolation (WIP)
+* interpCo2_O2
+* correctO2Data
+
 For more details about them, move yourself to the tests folder by running the following command in the command prompt:
 
 ```matlab
@@ -135,7 +143,7 @@ or a specific test of the file :
 >> runtests('TestFiles','ProcedureName','readCo2')
 ```
 
-the results is :
+the result is :
 
 ```text
 Running TFigureProperties
@@ -176,7 +184,7 @@ Totals:
 
 ### Interpolation module
 
-This fie test the following function
+TestInterpolation test the following function
 
 * interpCo2_O2
 
@@ -186,13 +194,7 @@ Note that it's highly recommended to run the previous test before running this o
 >> runtests('testFiles')
 ```
 
-You can run all testFiles tests with :
-
-```matlab
->> runtests('testInterpolation')
-```
-
-the results is :
+the result is :
 
 ```text
 Running TestInterpolation
@@ -221,4 +223,58 @@ Totals:
 
 ### O2 compensation module
 
-(WIP)
+TestO2Compensation test the following function
+
+* correctO2Data
+
+Note that it's highly recommended to run the previous test before running this one as it use readinterpTSC_CO2 and readAsciiO2
+
+```matlab
+>> runtests('TestO2Compensation')
+```
+
+the results is :
+
+```matlab
+>> runtests('testInterpolation')
+```
+
+the result is :
+
+```text
+Running TestO2Compensation
+Computing scaled temperature ...
+Computing solubility ...
+Computing salinity compensation ...
+Computing pressure compensation ...
+Computing o2 concentration ...
+Computing O2 Saturation ...
+Writing data to structure ...
+        OXYGEN_RAW: [278 131.2700 131.6100 131.3500 132.1700 245.0700 244.9200 244.7700 245.1900 245.4000]
+              SSJT: [20 20.4110 20.4120 20.4270 20.4290 21.3920 21.4810 21.5640 21.5870 21.5770]
+              SSPS: [0 35 35 35 35 36.5160 36.6140 36.7160 36.7550 36.7590]
+          LICOR_P: [1.0133e+03 1.0195e+03 1.0194e+03 1.0192e+03 1.0191e+03 1.0140e+03 1.0141e+03 1.0141e+03 1.0143e+03 1.0141e+03]
+    OXYGEN_ADJ_muM: [278 106.8229 107.0997 106.8906 107.5582 197.9599 197.7528 197.5395 197.8405 198.0022]
+    OXYGEN_ADJ_MLL: [6.2311 2.3943 2.4005 2.3958 2.4108 4.4371 4.4324 4.4276 4.4344 4.4380]
+OXYGEN_SATURATION: [6.9439 3.2662 3.2748 3.2690 3.2897 6.1303 6.1263 6.1220 6.1314 6.1377]
+
+.
+Done TestO2Compensation
+__________
+
+
+ans =
+
+TestResult with properties:
+
+      Name: 'TestO2Compensation/compensationTest'
+    Passed: 1
+    Failed: 0
+Incomplete: 0
+  Duration: 0.0739
+    Details: [1×1 struct]
+
+Totals:
+1 Passed, 0 Failed, 0 Incomplete.
+0.073924 seconds testing time.
+```
