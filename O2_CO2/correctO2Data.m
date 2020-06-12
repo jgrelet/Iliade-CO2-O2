@@ -8,6 +8,10 @@ function [co2] = correctO2Data(co2, salinity, depth, varargin)
     P = co2.LICOR_P; % pressure
     O2 = co2.OXYGEN_RAW; % raw oxygen
     
+    % It is useless to proceed to the computation if the oxygen data is not
+    % here. So we take all the data different from the default value
+    ind = find(co2.OXYGEN_RAW ~= -999);
+    
     CpC = 0.032; % Coeficient for pressure compensation
     %
     A0 = 2.00856;
@@ -26,14 +30,14 @@ function [co2] = correctO2Data(co2, salinity, depth, varargin)
     C0 = -3.11680e-7;
 
 
-    x = 298.15-T;
-    y = 273.15+T;
+    x = 298.15-T(ind);
+    y = 273.15+T(ind);
     
     disp("Computing scaled temperature ...");
     scaledTemperature = log( x ./ y );
     
     disp("Computing solubility ...");
-    solubility = (P/1013.25) .* 44.659 .* ...
+    solubility = (P(ind)/1013.25) .* 44.659 .* ...
         A0 + ...
         A1 .* +...
         A2 .* scaledTemperature.^2+...
@@ -44,15 +48,15 @@ function [co2] = correctO2Data(co2, salinity, depth, varargin)
         B1 .* scaledTemperature + ...
         B2 .* scaledTemperature.^2 + ...
         B3 .* scaledTemperature.^3 ) + ...
-        C0*S.^2;
+        C0*S(ind).^2;
     
     disp("Computing salinity compensation ...");
-    salinityCompensation = exp((S - salinity) .* ...
+    salinityCompensation = exp((S(ind) - salinity) .* ...
         (B0 + ...
         B1 .* scaledTemperature + ...
         B2 .* scaledTemperature.^2 + ...
         B3 .* scaledTemperature.^3) + ...
-        C0 .* (S.^2-salinity.^2)...
+        C0 .* (S(ind).^2-salinity.^2)...
         );
     
     %depthCompensation = O2 * (1 + (0.032*depth)/1000);
@@ -60,11 +64,11 @@ function [co2] = correctO2Data(co2, salinity, depth, varargin)
     pressureCompensation = ((abs(depth) /1000) * CpC) +1;
     
     disp("Computing o2 concentration ...");
-    o2Concentration_muM = O2.*salinityCompensation .* pressureCompensation;
+    o2Concentration_muM = O2(ind).*salinityCompensation .* pressureCompensation;
     o2Concentration_MLL = o2Concentration_muM./44.615;
     
     disp("Computing O2 Saturation ...");
-    o2Saturation = (O2 .* 2.2414) ./ solubility;
+    o2Saturation = (O2(ind) .* 2.2414) ./ solubility;
     
     disp("Writing data to structure ...");
     co2.OXYGEN_ADJ_muM = -999 * ones(size(co2.SSJT)); % default value
