@@ -1,4 +1,4 @@
-function interpTSG_CO2
+function interpFile = interpTSG_CO2(co2File, tsgFile)
 %
 % Interpolation des mesures TSG à la date des mesures CO2.
 % Par rapport au fichier *.csv qui est lu, les variables suivantes sont
@@ -27,7 +27,7 @@ clc
 
 % Lecture du fichier CO2
 % ----------------------
-[co2, co2File, error] = readConcatCO2;
+[co2, co2File, error] = readConcatCO2(co2File);
 
 if error
     
@@ -39,7 +39,7 @@ if error
         
         % Lecture du fichier TSG
         % ----------------------
-        [tsg, error2] = readAsciiTsgCO2;
+        [tsg, error2] = readAsciiTsgCO2(tsgFile);
         
         if error2
             
@@ -200,6 +200,7 @@ if error
             % Nom du fichier en écriture et ouverture
             % ---------------------------------------
             [FileOut,PathOut] = uiputfile('*.csv','Fichier en écriture');
+            interpFile = strcat (PathOut, FileOut);
             fidOut = fopen( [PathOut FileOut], 'w' );
             
             % Ecriture entete
