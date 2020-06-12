@@ -4,32 +4,90 @@ Integration of O2 and CO2 measurements
 
 ## USAGE
 
-The application is made of two phases:
+In order to run the program, you will need the following files:
 
-* CO2 and TSG interpolation
-* CO2 interpolated and O2
+* co2 data file with .csv format
+* tsg data file with .tsgqc format
+* o2 data file with .oxy format
 
-First, you have to run
+The program will run two different phases:
+
+* CO2 and TSG interpolation in TSG_CO2 folder
+* CO2/TSG and O2 interpolation in O2_CO2 folder
+
+There one function that rule them all : main which is at the root of the project
+So if you want to run both interpolation at once, you can run the following command:
+
+If you know the path to files, then run :
+
+```matlab
+>> main co2FilePath tsgFilePath o2FilePath
+```
+
+else :
+
+```matlab
+>> main
+```
+
+At the begining of the execution, the program will ask you to choose files:
+
+* The first is the .csv file : the output of TSGQC program
+* The second is the .tsgqc file : the thermosalinograph output file
+* The third file is the .oxy file : the optode output file
+
+### TSG CO2 Interpolation
+
+If you want to run the TSG CO2 interpolation, move to the correct folder:
+
+```matlab
+>> cd TSG_CO2
+```
+
+Once there, you will have to run the interpolation.
+
+If you know the path to files, then run :
+
+```matlab
+>> interpTSG_CO2 TSG_CO2FilePath o2FilePath
+```
+
+else :
 
 ```matlab
 >> interpTSG_CO2
 ```
 
-* The first file you have to choose is the CO2 file
+at the begining of the execution, the program will ask you to choose files:
+
+* The first is the .csv file : the output of TSGQC program
 * The second is the .tsgqc file : the thermosalinograph output file
-* The program will produce 8 figures and ask you where you want to save the TSG/CO2 interpolation
 
-When it's done, you can then run
+### O2 CO2 Interpolation
 
-```bash
->> interpAll
+If you want to run the O2 CO2 interpolation, move to the correct folder:
+
+```matlab
+>> cd O2_CO2
+```
+
+**Note that you need the TSg/CO2 interpolation file for this one.**
+
+If you know the path to files, then run :
+
+```matlab
+>> interpO2_CO2 TSG_CO2FilePath o2FilePath
+```
+
+else :
+
+```matlab
+>> interpO2_CO2
 ```
 
 * The first file you have to choose is the previous interpolation result
 * The second is the .oxy file : the optode output file
 * The program will ask you where you want to save the CO2/TSG/O2 interpolation
-
-interpAll will internally call interpCo2_O2 and correctO2Data
 
 ## UNIT TESTS
 
@@ -51,7 +109,7 @@ then, run
 >> ls
 ```
 
-The following file should be there :
+The following files will be there :
 
 * TestFiles.m
 * TestO2Compensation.m
