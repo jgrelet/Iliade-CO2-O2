@@ -1,8 +1,36 @@
-function main(varargin)
-    % This function regroup all the function that allow us to interpolate
-    % co2, tsg and O2 data.
+function main(co2File, tsgFile, o2File)
+    % With this function, you will be able to run all interpolations
+    % Input files :
+    % co2 => .csv
+    % tsg => .tsgqc
+    % o2  => .oxy
     
-    % Handle of file type
+    % path to interpolations
+    addpath("TSG_CO2");
+    addpath("O2_CO2");
     
+    % If there is no input parameter, the user will have to get them
+    if nargin == 0
+        % CO2 file
+        [FileIn, PathIn] = uigetfile( '*.csv', 'Read file name', 'MultiSelect','off');
+        co2File = char([PathIn FileIn]);
+        disp(char(co2File));
+
+        % TSG file
+        [FileIn, PathIn] = uigetfile( '*.tsgqc', 'Read file name', 'MultiSelect','off');
+        tsgFile = char([PathIn FileIn]);
+        disp(char(tsgFile));
+        
+        % O2 file
+        [FileIn, PathIn] = uigetfile( '*.oxy', 'Read file name', 'MultiSelect','off');
+        o2File = char([PathIn FileIn]);
+        disp(char(o2File));
+    end
+    
+    tsgCo2InterpFile = interpTSG_CO2(co2File, tsgFile);
+    o2Co2interpFile = interpCO2_O2(tsgCo2InterpFile , o2File);
+    
+    disp(strcat("TSG and CO2 interpolation saved in : ", tsgCo2InterpFile));
+    disp(strcat("O2 and CO2 interpolation saved in : ", o2Co2interpFile));
 
 end
