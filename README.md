@@ -101,7 +101,6 @@ This will test the following functions:
 
 * readAsciiO2
 * readInterpTSG_CO2
-* writeInterpolation (WIP)
 * interpCo2_O2
 * correctO2Data
 
@@ -129,7 +128,6 @@ This file test the following functions
 
 * readAsciiO2
 * readInterpTSG_CO2
-* writeInterpolation (WIP)
 
 You can run all testFiles tests with :
 
