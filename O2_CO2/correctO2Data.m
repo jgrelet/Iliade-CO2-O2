@@ -66,7 +66,6 @@ function [co2] = correctO2Data(co2, salinity, varargin)
     
     disp("Computing o2 concentration ...");
     o2Concentration_muM = O2(ind).*salinityCompensation .* pressureCompensation;
-    disp(o2Concentration_muM);
     o2Concentration_MLL = o2Concentration_muM./44.615;
     
     disp("Computing O2 Saturation ...");
