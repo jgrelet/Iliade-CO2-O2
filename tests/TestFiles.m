@@ -17,6 +17,7 @@ classdef TestFiles < matlab.unittest.TestCase
         function pathHandling(testCase)
             addpath("../O2_CO2");
             addpath("../TSG_CO2");
+            addpath("../struct2csv");
         end
     end
     
