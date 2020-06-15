@@ -8,8 +8,9 @@ classdef TestFiles < matlab.unittest.TestCase
             'exemple/CSLO2001/cslo2001.csv' };
         badFiles = {'exemple/CSLO1902/cslo1902.bad',...
             'exemple/CSLO2001/cslo2001.bad' };
-        writeTestFiles = {'exemple/CSLO1902/cslo1902.oxy',...
-            'exemple/CSLO2001/cslo2001.oxy' };
+        resFiles = {'exemple/resCO2_TSG.csv',...
+            'exemple/resCO2_O2.csv'...
+            };
     end
     
     methods(TestMethodSetup)
@@ -105,11 +106,54 @@ classdef TestFiles < matlab.unittest.TestCase
         end
         
         function writeInterpTest(testCase)
+            [co2, ~] = readInterpTSG_CO2(testCase.resFiles{1});
+            [data, ~] = readAsciiO2(testCase.trueFiles{1});
             
-%             [data, ~] = readAsciiO2(testCase.trueFiles{1});
-%             interpolation
-%             correctO2Data
-%             writeInterpolation
+            [co2] = interpolation(co2,data);
+
+            [expected_co2] = correctO2Data(co2, 0);
+
+            interpFile = writeInterpolation(expected_co2);
+            
+            % Get the data read in the file
+            % Read the file
+            varNames = {'DATE_TIME', 'GPS_TIME', 'TYPE', 'ERROR', 'LATX', 'LONX',...
+                        'LATX_INT','LONX_INT',...
+                        'EQU_T', 'STD', 'CO2_RAW', 'CO2_PHYS', 'H2O_RAW', 'H2O_PHYS', ...
+                        'LICOR_T', 'LICOR_P', 'ATM_P', 'EQU_P', 'H2O_FLOW', 'LICOR_FLOW', ...
+                        'EQU_PUMP', 'VENT_FLOW', 'COND_T', 'COND_ATM', 'COND_EQU', ...
+                        'DRIP_1', 'DRIP_2', 'DRY_BOX_T', 'DECK_BOX_T', ...
+                        'SSPS', 'SSPS_QC', 'SSJT', 'SSJT_QC', 'SSJT_COR', 'EQU_T_COR', ...
+                        'OXYGEN_RAW', 'OXYGEN_ADJ_muM','OXYGEN_ADJ_MLL','OXYGEN_SATURATION','OXYGEN_TEMPERATURE'...
+                        } ;
+
+            varTypes = {'char','char','char','single','double','double',...
+                        'double', 'double', ...
+                        'double', 'double', 'double', 'double', 'double', 'double', ...
+                        'double', 'double', 'double', 'double', 'double', 'double', ...
+                        'double', 'double', 'double', 'double', 'double', ...
+                        'double', 'double', 'double', 'double', ...
+                        'double', 'double', 'double', 'double', 'double', 'double', ....
+                        'double', 'double', 'double', 'double', 'double'
+                } ;
+            delimiter = ',';
+            opts = delimitedTextImportOptions('VariableNames',varNames,...
+                                            'VariableTypes',varTypes,...
+                                            'Delimiter',delimiter);
+            co2Data = readtable(interpFile, opts);
+            % We suppress the header
+            co2Data(1,:) = [];
+
+            actual_co2 = struct;
+            % Manual conversion to structure
+            % table2struct format do not produce a good structure
+            for i = 1:size(varNames,2)
+                actual_co2.(char(varNames(i))) = co2Data.(char(varNames(i)));
+            end
+            % Comparison with the data before writing
+            testCase.verifyEqual(expected_co2.CO2_RAW(1), actual_co2.CO2_RAW(1));
+            testCase.verifyEqual(expected_co2.CO2_RAW(13846), actual_co2.CO2_RAW(13846));
+            testCase.verifyEqual(expected_co2.CO2_RAW(end), actual_co2.CO2_RAW(end));
             
         end
         

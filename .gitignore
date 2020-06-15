@@ -5,7 +5,3 @@
 *.txt
 figs/*.jpg
 figs/*.png
-
-test.csv
-res1.csv
-res2.csv

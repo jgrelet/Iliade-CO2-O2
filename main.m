@@ -5,26 +5,31 @@ function main(co2File, tsgFile, o2File)
     % tsg => .tsgqc
     % o2  => .oxy
     
-    % path to interpolations
+    
     addpath("TSG_CO2");
     addpath("O2_CO2");
+    addpath("struct2csv");
     
     % If there is no input parameter, the user will have to get them
     if nargin == 0
         % CO2 file
-        [FileIn, PathIn] = uigetfile( '*.csv', 'Read file name', 'MultiSelect','off');
+        [FileIn, PathIn] = uigetfile( '*.csv', 'Read file name', 'MultiSelect','off', 'tests/exemple');
         co2File = char([PathIn FileIn]);
         disp(char(co2File));
 
         % TSG file
-        [FileIn, PathIn] = uigetfile( '*.tsgqc', 'Read file name', 'MultiSelect','off');
+        [FileIn, PathIn] = uigetfile( '*.tsgqc', 'Read file name', 'MultiSelect','off', 'tests/exemple');
         tsgFile = char([PathIn FileIn]);
         disp(char(tsgFile));
         
         % O2 file
-        [FileIn, PathIn] = uigetfile( '*.oxy', 'Read file name', 'MultiSelect','off');
+        [FileIn, PathIn] = uigetfile( '*.oxy', 'Read file name', 'MultiSelect','off', 'tests/exemple');
         o2File = char([PathIn FileIn]);
         disp(char(o2File));
+    end
+    
+    if ~exist("figs", 'dir')
+       mkdir("figs")
     end
     
     tsgCo2InterpFile = interpTSG_CO2(co2File, tsgFile);
