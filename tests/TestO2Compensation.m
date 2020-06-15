@@ -48,6 +48,8 @@ classdef TestO2Compensation < matlab.unittest.TestCase
             actual = correctO2Data(co2,0,0);
             
             testCase.verifyEqual(round(actual.OXYGEN_ADJ_muM, 2), exp.OXYGEN_ADJ_muM);
+            testCase.verifyEqual(round(actual.OXYGEN_ADJ_MLL, 2), exp.OXYGEN_ADJ_MLL);
+            testCase.verifyEqual(round(actual.OXYGEN_SATURATION, 2), exp.OXYGEN_SATURATION);
             
         end
     end

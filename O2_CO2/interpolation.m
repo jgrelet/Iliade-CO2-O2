@@ -22,7 +22,7 @@ function [co2] = interpolation(co2, o2)
         co2.(par)    = defaultPARA * ones(size(co2.DAYD));
         
         % Definition of time borders for the interpCo2_O2olation of co2 and o2 data
-        % We are looking for o2.DAYD(1) < co2.DAYD < o2.DAYD(end)
+        % We are looking for co2.DAYD(1) < o2.DAYD < co2.DAYD(end)
         indmin = 1;
         if co2.DAYD(1) < o2.DAYD(1)
             A = find( co2.DAYD > o2.DAYD(1) );

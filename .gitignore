@@ -7,5 +7,5 @@ figs/*.jpg
 figs/*.png
 
 test.csv
-res_interp.csv
-res_interp2.csv
+res1.csv
+res2.csv

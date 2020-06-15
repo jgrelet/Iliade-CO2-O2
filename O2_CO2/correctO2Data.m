@@ -1,8 +1,7 @@
-function [co2] = correctO2Data(co2, salinity, depth, varargin)
+function [co2] = correctO2Data(co2, salinity, varargin)
     % co2       : the co2 structure
     % salinity  : salinity setting (default is 0)
-    % depth     : the depth of the measures
-    
+    depth = 0;
     S = co2.SSPS; % salinity
     T = co2.SSJT; % temperature
     P = co2.LICOR_P; % pressure
@@ -13,7 +12,7 @@ function [co2] = correctO2Data(co2, salinity, depth, varargin)
     ind = find(co2.OXYGEN_RAW ~= -999);
     
     CpC = 0.032; % Coeficient for pressure compensation
-    %
+    % Solubility compensation coeficient
     A0 = 2.00856;
     A1 = 3.22400;
     A2 = 3.99063;
@@ -21,7 +20,7 @@ function [co2] = correctO2Data(co2, salinity, depth, varargin)
     A4 = 9.78188e-1;
     A5 = 1.71069;
     
-    % Sailinity compensation coeficient
+    % Salinity compensation coeficient
     B0 = -6.24097e-3;
     B1 = -6.93498e-3;
     B2 = -6.90358e-3;
@@ -37,7 +36,7 @@ function [co2] = correctO2Data(co2, salinity, depth, varargin)
     scaledTemperature = log( x ./ y );
     
     disp("Computing solubility ...");
-    solubility = (P(ind)/1013.25) .* 44.659 .* ...
+    solubility = (P(ind)./1013.25) .* 44.659 .* ...
         A0 + ...
         A1 .* +...
         A2 .* scaledTemperature.^2+...
@@ -59,9 +58,9 @@ function [co2] = correctO2Data(co2, salinity, depth, varargin)
         C0 .* (S(ind).^2-salinity.^2)...
         );
     
-    %depthCompensation = O2 * (1 + (0.032*depth)/1000);
+    depthCompensation = O2 .* (1 + (0.032*depth)/1000);
     disp("Computing pressure compensation ...");
-    pressureCompensation = ((abs(depth) /1000) * CpC) +1;
+    pressureCompensation = ((abs(depth) ./1000) * CpC) +1;
     
     disp("Computing o2 concentration ...");
     o2Concentration_muM = O2(ind).*salinityCompensation .* pressureCompensation;

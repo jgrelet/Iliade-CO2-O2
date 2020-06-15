@@ -57,7 +57,7 @@ function interpFile = interpCO2_O2(co2interpCo2_O2File, o2File, varargin)
     % Adjusting O2 DATA
     % default salinity setting is 0
     disp("Correcting O2 Data...");
-    [co2] = correctO2Data(co2, 0, 0);
+    [co2] = correctO2Data(co2, 0);
     
     interpFile = writeInterpolation(co2);
 end

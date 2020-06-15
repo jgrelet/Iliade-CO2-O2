@@ -20,7 +20,6 @@ function interpFile = writeInterpolation(co2)
                 '%.3f;%.0f;%.3f;%.0f;%.2f;%.2f;' ... %SSPS SSPS_QC SSJT SSJT_QC SSJT_COR EQU_T_COR 
                 '%.2f;%.2f;%.2f;%.2f;%.2f;'... %OXYGEN_RAW OXYGEN_ADJ_muM OXYGEN_ADJ_MLL OXYGEN_SATURATION OXYGEN_TEMPERATURE
                 '\n'];
-                
     [FileOut,PathOut] = uiputfile('*.csv','Fichier en écriture');
     interpFile = strcat(PathOut, FileOut);
     fidOut = fopen( [PathOut FileOut], 'w' );
@@ -30,27 +29,7 @@ function interpFile = writeInterpolation(co2)
         msg_error = ['Open file error : ' FileOut];
         warndlg( msg_error, 'ASCII error dialog');
     else
-        co2.GPS_TIME = char(cellstr(co2.GPS_TIME));
-        co2.TYPE = char(cellstr(co2.TYPE));
-
-        c = struct2cell(co2);
-        
-        % Number of columns
-        n = size(c, 1);
-        % Number of line 
-        m = size(c{1},1);
-        
-        % Data extraction of integers and reshape of the matrix
-        x = cell2mat(c(5:n));
-        x = reshape(x,m,n-4);
-        [Y, M, D, H, MN, S] = datevec(c{1}, 'dd/mm/yyyy HH:MM:SS');
-        date = [D,M,Y,H,MN,S];
-
-        fprintf( fidOut,'%s\n', HeaderOut);
-        for i=1:m
-            fprintf( fidOut, formatOut, date(i,:), co2.GPS_TIME(i,:), co2.TYPE(i,:),x(i,:));
-        end
-
+        struct2csv(co2,interpFile);
         fclose(fidOut);
     end
 

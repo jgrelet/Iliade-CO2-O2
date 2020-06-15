@@ -37,7 +37,7 @@ classdef TestInterpolation < matlab.unittest.TestCase
             testCase.verifyEqual(co2.OXYGEN_RAW(1), -999);
             % there should be a data the 2019 04 01 around 7 am => extract
             % line 428 from co2
-            testCase.verifyNotEqual(co2.OXYGEN_RAW(end), -999);
+            testCase.verifyNotEqual(co2.OXYGEN_RAW(428), -999);
             % there should be a value at the last line
             testCase.verifyNotEqual(co2.OXYGEN_RAW(end), -999);
             

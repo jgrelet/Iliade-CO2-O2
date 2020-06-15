@@ -8,6 +8,8 @@ classdef TestFiles < matlab.unittest.TestCase
             'exemple/CSLO2001/cslo2001.csv' };
         badFiles = {'exemple/CSLO1902/cslo1902.bad',...
             'exemple/CSLO2001/cslo2001.bad' };
+        writeTestFiles = {'exemple/CSLO1902/cslo1902.oxy',...
+            'exemple/CSLO2001/cslo2001.oxy' };
     end
     
     methods(TestMethodSetup)
@@ -100,6 +102,15 @@ classdef TestFiles < matlab.unittest.TestCase
             testCase.verifyEqual(data.CO2_RAW(1), first);
             testCase.verifyEqual(data.CO2_RAW(13846), random);
             testCase.verifyEqual(data.CO2_RAW(end), last);
+        end
+        
+        function writeInterpTest(testCase)
+            
+%             [data, ~] = readAsciiO2(testCase.trueFiles{1});
+%             interpolation
+%             correctO2Data
+%             writeInterpolation
+            
         end
         
     end
