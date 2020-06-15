@@ -10,7 +10,7 @@ function [o2, ok] = readAsciiO2(fileIn, varargin)
     % o2 ........ Structure with the relevant o2 data
     % ok ........ false if there is a problem
     % 
-
+    disp("Reading data from oxygen file");
     % CONSTANT
     ok = false;
     fieldNumber = 25;
@@ -31,7 +31,8 @@ function [o2, ok] = readAsciiO2(fileIn, varargin)
     % File selection
     % ---------------------
     if nargin ~= 1 || isempty(fileIn)
-        [FileIn, PathIn] = uigetfile( '*.oxy', 'Read file name', 'MultiSelect','off');
+        disp("Select the O2 data file");
+        [FileIn, PathIn] = uigetfile( '*.oxy', 'Select the O2 data file', 'MultiSelect','off', "../tests/exemple");
         fileIn = char([PathIn FileIn]);
     end
 
@@ -93,5 +94,6 @@ function [o2, ok] = readAsciiO2(fileIn, varargin)
     % Everything OK
     % -------------
     ok = true;
+    disp("readAsciiO2 : OK");
 
 end

@@ -1,6 +1,6 @@
 % Get the co2 data from the previous interpolation
 function [co2, ok] = readInterpTSG_CO2(fileIn, varargin)
-
+    disp("Readind the data from TSG/CO2 interpolation");
     if nargin ~= 1 || isempty(fileIn)
         [FileIn, PathIn] = uigetfile( '*.csv', 'Read file name', 'MultiSelect','off');
         fileIn = char([PathIn FileIn]);
@@ -48,4 +48,5 @@ function [co2, ok] = readInterpTSG_CO2(fileIn, varargin)
     end
     
     ok = true;
+    disp("readInterpTSG_CO2 : OK");
 end

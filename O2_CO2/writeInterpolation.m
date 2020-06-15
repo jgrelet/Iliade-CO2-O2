@@ -1,5 +1,7 @@
 function interpFile = writeInterpolation(co2)
-    [FileOut,PathOut] = uiputfile('*.csv','Fichier en écriture');
+
+    disp("Choose the location of the result file");
+    [FileOut,PathOut] = uiputfile('*.csv','Choose the location of the result file');
     interpFile = strcat(PathOut, FileOut);
     fidOut = fopen( [PathOut FileOut], 'w' );
 
@@ -11,5 +13,5 @@ function interpFile = writeInterpolation(co2)
         struct2csv(co2,interpFile);
         fclose(fidOut);
     end
-
+    disp("writeInterpolation : OK");
 end
