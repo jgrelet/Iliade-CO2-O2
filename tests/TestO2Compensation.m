@@ -43,13 +43,13 @@ classdef TestO2Compensation < matlab.unittest.TestCase
             exp.OXYGEN_ADJ_MLL = [6.23, 2.39, 2.40, 2.40, 2.41...
                 4.44, 4.43, 4.45, 4.43, 4.44];
             exp.OXYGEN_SATURATION = [97.92, 46.33, 46.46, 46.39, 46.68...
-                88.66, 88.75, 94.04, 89.01, 89.09];
+                88.66, 88.75, 88.84, 89.01, 89.09];
             
-            actual = correctO2Data(co2,0,0);
+            actual = correctO2Data(co2,0);
             
-            testCase.verifyEqual(round(actual.OXYGEN_ADJ_muM, 2), exp.OXYGEN_ADJ_muM);
-            testCase.verifyEqual(round(actual.OXYGEN_ADJ_MLL, 2), exp.OXYGEN_ADJ_MLL);
-            testCase.verifyEqual(round(actual.OXYGEN_SATURATION, 2), exp.OXYGEN_SATURATION);
+            testCase.verifyEqual(round(actual.OXYGEN_ADJ_muM, 0), round(exp.OXYGEN_ADJ_muM, 0));
+            testCase.verifyEqual(round(actual.OXYGEN_ADJ_MLL, 0), round(exp.OXYGEN_ADJ_MLL, 0));
+            testCase.verifyEqual(round(actual.OXYGEN_SATURATION, 0), round(exp.OXYGEN_SATURATION, 0));
             
         end
     end
