@@ -14,16 +14,19 @@ classdef TestFiles < matlab.unittest.TestCase
     end
     
     methods(TestMethodSetup)
-        function pathHandling(testCase)
+        function addPaths(testCase)
             addpath("../O2_CO2");
             addpath("../TSG_CO2");
-            addpath("../struct2csv");
         end
     end
     
     methods(TestMethodTeardown)
         function deleteTests(testCase)
             delete('*.csv');
+        end
+        function rmPaths(testCase)
+            rmpath("../O2_CO2");
+            rmpath("../TSG_CO2");
         end
     end
     
