@@ -16,8 +16,7 @@ fid = fopen( fileINI, 'r' );
 % Check file
 % -----------
 if fid == -1
-  disp( '... WARNING');
-  disp( strcat('... ini file not found : ', fileINI ));
+  disp( strcat('... WARNING : ini file not found => ', fileINI ));
   ini = [];
   error = -1;
   return;
