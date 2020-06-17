@@ -1,6 +1,7 @@
 function [co2] = correctO2Data(co2, salinity, varargin)
     % co2       : the co2 structure
     % salinity  : salinity setting (default is 0)
+    disp("... Correcting O2 data");
     depth = 0;
     S = co2.SSPS; % salinity
     T = co2.SSJT; % temperature
@@ -32,10 +33,10 @@ function [co2] = correctO2Data(co2, salinity, varargin)
     x = 298.15-T(ind);
     y = 273.15+T(ind);
     
-    disp("Computing scaled temperature ...");
+    disp("... Computing scaled temperature");
     scaledTemperature = log( x ./ y );
     
-    disp("Computing solubility ...");
+    disp("... Computing solubility");
     solubility = (P(ind)./1013.25) .* 44.659 .* ...
         exp( ...
         A0 + ...
@@ -51,7 +52,7 @@ function [co2] = correctO2Data(co2, salinity, varargin)
         C0*S(ind).^2 ...
         );
     
-    disp("Computing salinity compensation ...");
+    disp("... Computing salinity compensation");
     salinityCompensation = exp((S(ind) - salinity) .* ...
         (B0 + ...
         B1 .* scaledTemperature + ...
@@ -61,17 +62,17 @@ function [co2] = correctO2Data(co2, salinity, varargin)
         );
     
     %depthCompensation = O2(ind) .* (1 + (0.032*depth)/1000);
-    disp("Computing pressure compensation ...");
+    disp("... Computing pressure compensation");
     pressureCompensation = ((abs(depth) ./1000) * CpC) +1;
     
-    disp("Computing o2 concentration ...");
+    disp("... Computing o2 concentration");
     o2Concentration_muM = O2(ind).*salinityCompensation .* pressureCompensation;
     o2Concentration_MLL = o2Concentration_muM./44.615;
     
-    disp("Computing O2 Saturation ...");
+    disp("... Computing O2 Saturation");
     o2Saturation = 100 .* o2Concentration_muM ./ solubility;
     
-    disp("Writing data to structure ...");
+    disp("... Writing data to structure");
     co2.OXYGEN_ADJ_muM = -999 * ones(size(co2.SSJT)); % default value
     co2.OXYGEN_ADJ_MLL = -999 * ones(size(co2.SSJT)); % default value
     co2.OXYGEN_SATURATION = -999 * ones(size(co2.SSJT)); % default value
@@ -81,4 +82,5 @@ function [co2] = correctO2Data(co2, salinity, varargin)
     co2.OXYGEN_ADJ_MLL(ind) = o2Concentration_MLL;
     
     co2.OXYGEN_SATURATION(ind) = o2Saturation;
+    disp("... correctO2Data");
 end

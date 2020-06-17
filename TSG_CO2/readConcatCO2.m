@@ -13,16 +13,16 @@ function [co2, co2File, error] = readConcatCO2(co2File)
 %              1 .... tout s'est bien passé
 %             -1 .... pb d'ouverture de fichier
 % 
-
+disp("... Reading the data from the concat CO2 file");
 % Sélection du fichier
 % ---------------------
 if nargin == 0
-    [FileIn, PathIn] = uigetfile( '*.csv', 'Read CO2 file name', 'MultiSelect','off');
+    disp("Select the CO2 file name");
+    [FileIn, PathIn] = uigetfile( '*.csv', 'Select the CO2 file name', 'MultiSelect','off');
     co2File = char([PathIn FileIn]);
 end
 % ouverture du fichier
 % --------------------
-disp(char(co2File))
 fid    = fopen( co2File, 'r' );
 
 % Check file
@@ -34,9 +34,7 @@ if fid == -1
   return;
 end
 
-% Display more info about read file on console
-% --------------------------------------------
-fprintf('...reading %s : ', co2File);
+disp(strcat('... Reading ', co2File));
 
 % Lecture de l'entête
 % 
@@ -130,5 +128,5 @@ fclose( fid );
 % Everything OK
 % -------------
 error = 1;
-
+disp("... readConcatCO2 : DONE");
 end

@@ -1,5 +1,5 @@
 function [co2] = interpolation(co2, o2)
-    disp("Interpolation of CO2 and O2 data");
+    disp("... Interpolation of CO2 and O2 data");
     PARA = {'OXYGEN_RAW', 'OXYGEN_SATURATION', 'OXYGEN_TEMPERATURE'};
     % Conversion of the date in serial date
     format = 'dd/mm/yyyy HH:MM:SS';
@@ -41,5 +41,5 @@ function [co2] = interpolation(co2, o2)
         
         co2.(par)(indmin:indmax) = interp1(o2.DAYD, o2.(par), co2.DAYD(indmin:indmax));
     end % end for
-    disp("interpolation : OK");
+    disp("... interpolation : OK");
 end

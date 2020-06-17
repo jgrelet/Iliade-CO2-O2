@@ -22,8 +22,7 @@ function interpFile = interpTSG_CO2(co2File, tsgFile)
 % Fonctions internes en fin de ce fichier :
 % selectTSG, interp
 
-close all
-clc
+disp("TSG CO2 interpolation ...");
 
 % Lecture du fichier CO2
 % ----------------------
@@ -43,13 +42,13 @@ if error
         
         if error2
             
-            figure( 'Name', 'PlotYY' )
-            [AX,H1,H2] = plotyy(tsg.DAYD, tsg.SSPS, co2.DAYD, co2.CO2_PHYS ); %#ok<PLOTYY>
-            datetick(AX(1), 'x', 'mmm-dd', 'keeplimits', 'keepticks')
-            datetick(AX(2), 'x', 'mmm-dd', 'keeplimits', 'keepticks')
-            set(H1, 'LineStyle', 'None', 'Marker', '.', 'MarkerEdgeColor', 'k');
-            set(H2, 'LineStyle', 'None', 'Marker', '.', 'MarkerEdgeColor', 'r');
-            legend('SSPS','CO2 PHYS', 'Location','SouthWest')
+%             figure( 'Name', 'PlotYY' )
+%             [AX,H1,H2] = plotyy(tsg.DAYD, tsg.SSPS, co2.DAYD, co2.CO2_PHYS ); %#ok<PLOTYY>
+%             datetick(AX(1), 'x', 'mmm-dd', 'keeplimits', 'keepticks')
+%             datetick(AX(2), 'x', 'mmm-dd', 'keeplimits', 'keepticks')
+%             set(H1, 'LineStyle', 'None', 'Marker', '.', 'MarkerEdgeColor', 'k');
+%             set(H2, 'LineStyle', 'None', 'Marker', '.', 'MarkerEdgeColor', 'r');
+%             legend('SSPS','CO2 PHYS', 'Location','SouthWest')
             
             % Selection des mesures TSG. On sélectionne dans l'ordre :
             % 1 - les données corrigées (ADJUSTED) - Code qualité 5
@@ -112,57 +111,57 @@ if error
             if ~exist("figs", 'dir')
                mkdir("figs")
             end
-            figure( 'Name', 'Latitude');
-            hold on;
-            plot( co2.DAYD, co2.LATX, 'b.');
-            plot( co2.DAYD, co2.LATX_INT, 'r.');
-            datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
-            legend('LATX','LATX_INT Interp', 'Location','SouthWest');
-            
-            figure( 'Name', 'Longitude');
-            hold on;
-            plot( co2.DAYD, co2.LONX, 'b.');
-            plot( co2.DAYD, co2.LONX_INT, 'r.');
-            datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
-            legend('LONX','LONX_INT Interp', 'Location','SouthWest');
-            
-            figure(  'Name', 'SSPS_et_co2_SSPS');
-            % plot( tsg.DAYD, tsg.SSPS_SEL, 'k.');
-            hold on;
-            plot( tsg.DAYD, tsg.SSPS_SEL, 'b.');
-            plot( co2.DAYD, co2.SSPS, 'r.');
-            datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
-            legend('SSPS','SSPS Interp', 'Location','SouthWest');
-            
-            % Sauvegarde la figure au format *.png
-            eval( ['print -dpng figs' filesep get(gcf, 'Name')]);
-            
-            figure(  'Name', 'SSPS_QC');
-            plot( co2.DAYD, co2.SSPS_QC, 'k.');
-            datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
-            legend('SSPS QC', 'Location','SouthWest');
-            
-            % Sauvegarde la figure au format *.png
-            eval( ['print -dpng figs' filesep get(gcf, 'Name')]);
-            
-            figure(  'Name', 'SSJT');
-            % plot( tsg.DAYD, tsg.SSJT_SEL, 'k.');
-            hold on;
-            plot( tsg.DAYD, tsg.SSJT_SEL, 'b.');
-            plot( co2.DAYD, co2.SSJT, 'r.');
-            datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
-            legend('SSJT','SSJT Interp', 'Location','SouthWest');
-            
-            % Sauvegarde la figure au format *.png
-            eval( ['print -dpng figs' filesep get(gcf, 'Name')]);
-            
-            figure(  'Name', 'SSJT_QC');
-            plot( co2.DAYD, co2.SSJT_QC, 'k.');
-            datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
-            legend('SSJT QC', 'Location','SouthWest');
-            
-            % Sauvegarde la figure au format *.png
-            eval( ['print -dpng figs' filesep  get(gcf, 'Name')]);
+%             figure( 'Name', 'Latitude');
+%             hold on;
+%             plot( co2.DAYD, co2.LATX, 'b.');
+%             plot( co2.DAYD, co2.LATX_INT, 'r.');
+%             datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
+%             legend('LATX','LATX_INT Interp', 'Location','SouthWest');
+%             
+%             figure( 'Name', 'Longitude');
+%             hold on;
+%             plot( co2.DAYD, co2.LONX, 'b.');
+%             plot( co2.DAYD, co2.LONX_INT, 'r.');
+%             datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
+%             legend('LONX','LONX_INT Interp', 'Location','SouthWest');
+%             
+%             figure(  'Name', 'SSPS_et_co2_SSPS');
+%             % plot( tsg.DAYD, tsg.SSPS_SEL, 'k.');
+%             hold on;
+%             plot( tsg.DAYD, tsg.SSPS_SEL, 'b.');
+%             plot( co2.DAYD, co2.SSPS, 'r.');
+%             datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
+%             legend('SSPS','SSPS Interp', 'Location','SouthWest');
+%             
+%             % Sauvegarde la figure au format *.png
+%             eval( ['print -dpng figs' filesep get(gcf, 'Name')]);
+%             
+%             figure(  'Name', 'SSPS_QC');
+%             plot( co2.DAYD, co2.SSPS_QC, 'k.');
+%             datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
+%             legend('SSPS QC', 'Location','SouthWest');
+%             
+%             % Sauvegarde la figure au format *.png
+%             eval( ['print -dpng figs' filesep get(gcf, 'Name')]);
+%             
+%             figure(  'Name', 'SSJT');
+%             % plot( tsg.DAYD, tsg.SSJT_SEL, 'k.');
+%             hold on;
+%             plot( tsg.DAYD, tsg.SSJT_SEL, 'b.');
+%             plot( co2.DAYD, co2.SSJT, 'r.');
+%             datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
+%             legend('SSJT','SSJT Interp', 'Location','SouthWest');
+%             
+%             % Sauvegarde la figure au format *.png
+%             eval( ['print -dpng figs' filesep get(gcf, 'Name')]);
+%             
+%             figure(  'Name', 'SSJT_QC');
+%             plot( co2.DAYD, co2.SSJT_QC, 'k.');
+%             datetick('x', 'mmm-dd', 'keeplimits', 'keepticks');
+%             legend('SSJT QC', 'Location','SouthWest');
+%             
+%             % Sauvegarde la figure au format *.png
+%             eval( ['print -dpng figs' filesep  get(gcf, 'Name')]);
             
             % Ecriture
             % --------
@@ -202,15 +201,15 @@ if error
             
             % Nom du fichier en écriture et ouverture
             % ---------------------------------------
-            [FileOut,PathOut] = uiputfile('*.csv','Fichier en écriture');
+            disp("... Choose the location for the result file interpolation TSG/CO2 ");
+            [FileOut,PathOut] = uiputfile('*.csv','O2 CO2 interpolation result file');
             interpFile = strcat (PathOut, FileOut);
             fidOut = fopen( [PathOut FileOut], 'w' );
             
             % Ecriture entete
             % ---------------
             if fidOut == -1
-                msg_error = ['Open file error : ' FileOut];
-                warndlg( msg_error, 'ASCII error dialog');
+                error("Cannot open file");
             else
                 
                 % Réordonne les champs
@@ -239,6 +238,7 @@ if error
                 [Y, M, D, H, MN, S] = datevec(c{1});
                 date = [D,M,Y,H,MN,S];
                 
+                disp(strcat("... Writing results in : ", interpFile));
                 % ecriture
                 % --------
                 fprintf( fidOut,'%s\n', HeaderOut);
@@ -252,6 +252,7 @@ if error
         end  % if error2
     end  % if error1
 end  % if error
+disp(">> interpTSG_CO2 : DONE <<");
 end
 
 %% Fonction selectTS
@@ -265,7 +266,7 @@ function [tsg] = selectTS(tsg)
 %      Soit tsg.SSPS avec un code qualité 1 (GOOD) ou 2 (PROBABLY GOOD),
 %      Soit tsg.SSPS_ADJUSTED avec un code 5 (VALUE CHANGED)
 % ---------------------------------------------------------------------
-
+disp("... Selecting relevant TSG data");
 
 probablygoodQC = 2;
 nocontrolQC    = 0;
@@ -330,41 +331,41 @@ for par = PARA
     
 end
 
-% Test de tracé
-% -------------
-figure( 'Name', 'selectTSG' )
-%plot( tsg.DAYD,tsg.SSPS, 'k.')
-hold on
-%plot( tsg.DAYD,tsg.SSPS_SEL, 'm*')
-legendTxt = '';
-ind = find(tsg.SSPS_QC_SEL < 10);
-if ~isempty( ind )
-    plot( tsg.DAYD(ind), tsg.SSPS_SEL(ind), 'r*');
-    legendTxt{1,1} = 'SSPS NoMeasure';
-end
-ind = find(tsg.SSPS_QC_SEL < 6);
-if ~isempty( ind )
-    plot( tsg.DAYD(ind), tsg.SSPS_SEL(ind), 'g*');
-    legendTxt{1,2} = 'SSPS ADJUSTED';
-end
-ind = find(tsg.SSPS_QC_SEL < 3);
-if ~isempty( ind )
-    plot( tsg.DAYD(ind), tsg.SSPS_SEL(ind), 'b*');
-    legendTxt{1,3} = 'SSPS QC = 1,2 ou 6';
-end
-ind = find(tsg.SSPS_QC_SEL == 0);
-if ~isempty( ind )
-    plot( tsg.DAYD(ind), tsg.SSPS_SEL(ind), 'b*');
-    legendTxt{1,4} = 'SSPS NoControl';
-end
-datetick('x', 'mmm-dd', 'keeplimits', 'keepticks')
-title( 'Mesures SSPS selectionnees');
-legend( legendTxt, 'Location','SouthWest');
-% legend('SSPS NoMeasure', 'SSPS ADJUSTED', 'SSPS QC = 1 ou 2' , 'SSPS NoControl', 'Location','SouthWest');
-
-% Sauvegarde la figure au format *.png
-eval( ['print -dpng figs' filesep get(gcf, 'name')]);
-
+% % Test de tracé
+% % -------------
+% figure( 'Name', 'selectTSG' )
+% %plot( tsg.DAYD,tsg.SSPS, 'k.')
+% hold on
+% %plot( tsg.DAYD,tsg.SSPS_SEL, 'm*')
+% legendTxt = '';
+% ind = find(tsg.SSPS_QC_SEL < 10);
+% if ~isempty( ind )
+%     plot( tsg.DAYD(ind), tsg.SSPS_SEL(ind), 'r*');
+%     legendTxt{1,1} = 'SSPS NoMeasure';
+% end
+% ind = find(tsg.SSPS_QC_SEL < 6);
+% if ~isempty( ind )
+%     plot( tsg.DAYD(ind), tsg.SSPS_SEL(ind), 'g*');
+%     legendTxt{1,2} = 'SSPS ADJUSTED';
+% end
+% ind = find(tsg.SSPS_QC_SEL < 3);
+% if ~isempty( ind )
+%     plot( tsg.DAYD(ind), tsg.SSPS_SEL(ind), 'b*');
+%     legendTxt{1,3} = 'SSPS QC = 1,2 ou 6';
+% end
+% ind = find(tsg.SSPS_QC_SEL == 0);
+% if ~isempty( ind )
+%     plot( tsg.DAYD(ind), tsg.SSPS_SEL(ind), 'b*');
+%     legendTxt{1,4} = 'SSPS NoControl';
+% end
+% datetick('x', 'mmm-dd', 'keeplimits', 'keepticks')
+% title( 'Mesures SSPS selectionnees');
+% legend( legendTxt, 'Location','SouthWest');
+% % legend('SSPS NoMeasure', 'SSPS ADJUSTED', 'SSPS QC = 1 ou 2' , 'SSPS NoControl', 'Location','SouthWest');
+% 
+% % Sauvegarde la figure au format *.png
+% eval( ['print -dpng figs' filesep get(gcf, 'name')]);
+disp("... selectTS : DONE");
 end
 
 %% Function interpolation
@@ -373,7 +374,7 @@ function [co2] = interp(co2, tsg)
 %
 % Interpolation et traitement des cas particuliers
 % -------------------------------------------------
-
+disp("... Interpolating co2 and tsg");
 % Initialisation
 % --------------
 dTmax          = 2;
@@ -495,6 +496,7 @@ for par = PARA
     end
     
 end
+    disp("... interp : DONE");
 end
 %% Function interpolation Position
 %
@@ -502,7 +504,7 @@ function [co2] = interp_POS(co2, tsg)
 %
 % Interpolation et traitement des cas particuliers
 % -------------------------------------------------
-
+disp("... Interpolating positions");
 PARA = {'LATX', 'LONX'};
 
 for par = PARA
@@ -579,4 +581,5 @@ for par = PARA
     
     
 end
+    disp("... interp_POS : DONE");
 end

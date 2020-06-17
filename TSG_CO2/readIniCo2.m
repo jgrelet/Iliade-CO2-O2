@@ -2,7 +2,7 @@ function [ini, error] = readIniCo2(co2File)
 %
 % Lecture du fichier d'information associé au fichier CO2
 %
-
+disp("... Reading the information file linked to the CO2 file");
 % Forme le nom de fichier. Il faut simplement remplacer le suffixe du
 % fichier C02 'csv' par 'ini'
 % -------------------------------------------------------------------
@@ -16,10 +16,8 @@ fid = fopen( fileINI, 'r' );
 % Check file
 % -----------
 if fid == -1
-  msg_error = ['Pas de fichier : ' fileINI];
-  disp( 'ATTENTION');
-  disp( msg_error );
-  %warndlg( msg_error, 'ASCII error dialog', 'modal');
+  disp( '... WARNING');
+  disp( strcat('... ini file not found : ', fileINI ));
   ini = [];
   error = -1;
   return;
@@ -34,7 +32,9 @@ else
     end
   end
   
-  fclose( fid )
+  fclose( fid );
 end
+
+disp("... readIniCo2 : DONE");
 
 end

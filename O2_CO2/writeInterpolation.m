@@ -1,7 +1,6 @@
 function interpFile = writeInterpolation(co2)
-
-    disp("Choose the location of the result file");
-    [FileOut,PathOut] = uiputfile('*.csv','Choose the location of the result file');
+    disp("... Choose the location for the result file interpolation O2/CO2 ");
+    [FileOut,PathOut] = uiputfile('*.csv','O2 CO2 interpolation result file');
     interpFile = strcat(PathOut, FileOut);
     fidOut = fopen( [PathOut FileOut], 'w' );
 
@@ -10,8 +9,9 @@ function interpFile = writeInterpolation(co2)
         msg_error = ['Open file error : ' FileOut];
         warndlg( msg_error, 'ASCII error dialog');
     else
+        disp(strcat("... Writing results in : ", interpFile));
         struct2csv(co2,interpFile);
         fclose(fidOut);
     end
-    disp("writeInterpolation : OK");
+    disp("... writeInterpolation : DONE");
 end

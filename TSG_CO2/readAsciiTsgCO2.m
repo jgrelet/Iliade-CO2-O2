@@ -1,4 +1,4 @@
-function [tsg, error] = readAsciiTsgCO2(fileIn)
+function [tsg, err] = readAsciiTsgCO2(fileIn)
 % readAsciiTsgCO2
 % Function to read TSG data in ASCII format.
 %
@@ -8,34 +8,32 @@ function [tsg, error] = readAsciiTsgCO2(fileIn)
 % Output
 % ------
 % tsg ........ Structure contenant toutes les variables des fichiers TSG
-% error ...... code d'erreur
+% err ...... code d'erreur
 %              1 .... tout s'est bien passé
 %             -1 .... pb d'ouverture de fichier
 % 
 
+disp("... Reading the tsg data");
+
 % Sélection du fichier
 % ---------------------
 if nargin == 0
-    [FileIn, PathIn] = uigetfile( '*.tsgqc', 'Read file name', 'MultiSelect','off');
+    disp("... Select the tsg file");
+    [FileIn, PathIn] = uigetfile( '*.tsgqc', 'Select the tsg file', 'MultiSelect','off');
     fileIn = char([PathIn FileIn]);
 end
 % ouverture du fichier
 % --------------------
-disp(char(fileIn))
 fid    = fopen( fileIn, 'r' );
 
 % Check file
 % -----------
 if fid == -1
-  msg_error = ['Open file error : ' fileIn];
-  warndlg( msg_error, 'ASCII error dialog');
-  error = -1;
-  return;
+  err = -1;
+  error("File not found");
 end
 
-% Display more info about read file on console
-% --------------------------------------------
-fprintf('...reading %s : ', fileIn);
+disp(strcat("... reading : ", fileIn));
 
 % Read the header till the header line has been read
 % --------------------------------------------------
@@ -154,6 +152,6 @@ fclose( fid );
 
 % Everything OK
 % -------------
-error = 1;
-
+err = 1;
+disp("... readAsciiTsgCO2 : DONE");
 end

@@ -35,9 +35,9 @@ function main(co2File, tsgFile, o2File)
         mkdir("figs")
     end
     
-    disp("Interpolation of TSG and CO2 data");
+    disp(">> Interpolation of TSG and CO2 data <<");
     tsgCo2InterpFile = interpTSG_CO2(co2File, tsgFile);
-    disp("Interpolation of O2 and CO2 data");
+    disp(">> Interpolation of O2 and CO2 data <<");
     o2Co2interpFile = interpCO2_O2(tsgCo2InterpFile , o2File);
     
     disp(strcat("TSG and CO2 interpolation saved in : ", tsgCo2InterpFile));

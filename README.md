@@ -18,7 +18,7 @@ There is two parts in the program:
 There one function that rule them all : main which is at the root of the project
 So if you want to run both interpolation at once, you can run the following command:
 
-If you know the path to files, then run :
+If you know the path of ALL the files, then run :
 
 ```matlab
 >> main co2FilePath tsgFilePath o2FilePath
@@ -35,6 +35,13 @@ At the begining of the execution, the program will ask you to choose files:
 * The first is the .csv file : the output of TSGQC program
 * The second is the .tsgqc file : the thermosalinograph output file
 * The third file is the .oxy file : the optode output file
+
+At the end of the execution, the program will print in the console the path to both interpolation files
+you can you use the trace function in order to visualize the data:
+
+```matlab
+>> trace co2InterpolationFile o2InterpolationFile
+```
 
 ### TSG CO2 Interpolation
 

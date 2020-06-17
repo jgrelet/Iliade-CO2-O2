@@ -1,4 +1,4 @@
-function [o2, ok] = readAsciiO2(fileIn, varargin)
+function o2 = readAsciiO2(fileIn)
     % readAsciiO2
     % Function to read o2 data in ASCII format.
     %
@@ -10,9 +10,8 @@ function [o2, ok] = readAsciiO2(fileIn, varargin)
     % o2 ........ Structure with the relevant o2 data
     % ok ........ false if there is a problem
     % 
-    disp("Reading data from oxygen file");
+    disp("... Reading data from oxygen file");
     % CONSTANT
-    ok = false;
     fieldNumber = 25;
     header = ["yearmonthday", "hourminutesecond", ...
         "measurement", "sensor_number", "serial_number",...
@@ -28,14 +27,6 @@ function [o2, ok] = readAsciiO2(fileIn, varargin)
         "RawTem", "RawTem_val",...
         ];
 
-    % File selection
-    % ---------------------
-    if nargin ~= 1 || isempty(fileIn)
-        disp("Select the O2 data file");
-        [FileIn, PathIn] = uigetfile( '*.oxy', 'Select the O2 data file', 'MultiSelect','off', "../tests/exemple");
-        fileIn = char([PathIn FileIn]);
-    end
-
     % ouverture du fichier
     % --------------------
     fid    = fopen( fileIn, 'r' );
@@ -43,7 +34,7 @@ function [o2, ok] = readAsciiO2(fileIn, varargin)
     % Check file
     % -----------
     if(fid == -1)
-        error('ReadAsciiO2:File not found', 'File not found');
+        error('File not found');
     end
 
     % We can put the format in the toml file
@@ -94,6 +85,6 @@ function [o2, ok] = readAsciiO2(fileIn, varargin)
     % Everything OK
     % -------------
     ok = true;
-    disp("readAsciiO2 : OK");
+    disp("... readAsciiO2 : DONE");
 
 end
