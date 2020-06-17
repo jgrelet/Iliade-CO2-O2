@@ -54,19 +54,19 @@ classdef TestFiles < matlab.unittest.TestCase
             disp('Check the number of lines read');
             
             % cslo1902.oxy
-            [data, ~] = readAsciiO2(testCase.trueFiles{1});
+            data = readAsciiO2(testCase.trueFiles{1});
             testCase.verifyEqual(size(data.DAYD,1), 15354);
             
             % cslo2001.oxy
-            [data, ~] = readAsciiO2(testCase.trueFiles{2});
+            data = readAsciiO2(testCase.trueFiles{2});
             testCase.verifyEqual(size(data.DAYD,1), 5468);
             
             % cslo2001.csv
-            [data, ~] = readInterpTSG_CO2(testCase.trueFiles{3});
+            data = readInterpTSG_CO2(testCase.trueFiles{3});
             testCase.verifyEqual(size(data.DATE_TIME,1), 20126);
             
             % cslo2001.csv
-            [data, ~] = readInterpTSG_CO2(testCase.trueFiles{4});
+            data = readInterpTSG_CO2(testCase.trueFiles{4});
             testCase.verifyEqual(size(data.DATE_TIME,1), 21122);
         end   
         
@@ -75,7 +75,7 @@ classdef TestFiles < matlab.unittest.TestCase
             first = 310.33;
             random = 0.02; % Line 8870
             last = 234.00;
-            [data, ~] = readAsciiO2(testCase.trueFiles{1});
+            data = readAsciiO2(testCase.trueFiles{1});
             testCase.verifyEqual(data.OXYGEN_RAW(1), first);
             testCase.verifyEqual(data.OXYGEN_RAW(8870), random);
             testCase.verifyEqual(data.OXYGEN_RAW(end), last);
@@ -83,7 +83,7 @@ classdef TestFiles < matlab.unittest.TestCase
             first = 308.18;
             random = 268.22; % Line 2142
             last = 232.56;
-            [data, ~] = readAsciiO2(testCase.trueFiles{2});
+            data = readAsciiO2(testCase.trueFiles{2});
              testCase.verifyEqual(data.OXYGEN_RAW(1), first);
             testCase.verifyEqual(data.OXYGEN_RAW(2142), random);
             testCase.verifyEqual(data.OXYGEN_RAW(end), last);
@@ -94,7 +94,7 @@ classdef TestFiles < matlab.unittest.TestCase
             first = 14360600.00;
             random = 15043466.00; % Line 11886
             last = 14883855.00;
-            [data, ~] = readInterpTSG_CO2(testCase.trueFiles{3});
+            data = readInterpTSG_CO2(testCase.trueFiles{3});
             testCase.verifyEqual(data.CO2_RAW(1), first);
             testCase.verifyEqual(data.CO2_RAW(11885), random);
             testCase.verifyEqual(data.CO2_RAW(end), last);
@@ -103,19 +103,19 @@ classdef TestFiles < matlab.unittest.TestCase
             first = 13427429.00;
             random = 14268601.00; % Line 13847
             last = 14253565.00;
-            [data, ~] = readInterpTSG_CO2(testCase.trueFiles{4});
+            data = readInterpTSG_CO2(testCase.trueFiles{4});
             testCase.verifyEqual(data.CO2_RAW(1), first);
             testCase.verifyEqual(data.CO2_RAW(13846), random);
             testCase.verifyEqual(data.CO2_RAW(end), last);
         end
         
         function writeInterpTest(testCase)
-            [co2, ~] = readInterpTSG_CO2(testCase.resFiles{1});
-            [data, ~] = readAsciiO2(testCase.trueFiles{1});
+            co2 = readInterpTSG_CO2(testCase.resFiles{1});
+            data = readAsciiO2(testCase.trueFiles{1});
             
-            [co2] = interpolation(co2,data);
+            co2 = interpolation(co2,data);
 
-            [expected_co2] = correctO2Data(co2, 0);
+            expected_co2 = correctO2Data(co2, 0);
 
             interpFile = writeInterpolation(expected_co2);
             

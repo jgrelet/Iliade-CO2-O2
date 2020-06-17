@@ -1,4 +1,4 @@
-function [co2] = correctO2Data(co2, salinity, varargin)
+function [co2] = correctO2Data(co2, salinity)
     % co2       : the co2 structure
     % salinity  : salinity setting (default is 0)
     disp("... Correcting O2 data");

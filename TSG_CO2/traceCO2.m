@@ -1,4 +1,4 @@
-function traceCO2
+function traceCO2(fileIn)
 %
 % Tracé d'un fichier CO2 navires marchands au format *.csv 
 %
@@ -15,10 +15,6 @@ function traceCO2
 % temperature EQU, LICOR, COND, DRY BOX, DECK BOX
 %
 
-clear all
-close all
-clc
-
 % Nombre de colonnes di fichier
 % -----------------------------
 NbCol = 34;
@@ -33,7 +29,10 @@ HeaderIn = ['Type;error;Date Time; GPS time; latitude; longitude;'...
 
 % Sélection et ouverture du fichier
 % ---------------------------------
-[FileIn, PathIn] = uigetfile( '*.csv', 'Read file name', 'MultiSelect','off');
+if nargin == 0
+   [FileIn, PathIn] = uigetfile( '*.csv', 'Read file name', 'MultiSelect','off');
+   fileIn = char([PathIn FileIn]);
+end
 
 % ouverture du fichier
 % --------------------

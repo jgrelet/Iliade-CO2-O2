@@ -16,7 +16,7 @@ function [co2, co2File, error] = readConcatCO2(co2File)
 disp("... Reading the data from the concat CO2 file");
 % Sélection du fichier
 % ---------------------
-if nargin == 0
+if nargin ~= 1
     disp("Select the CO2 file name");
     [FileIn, PathIn] = uigetfile( '*.csv', 'Select the CO2 file name', 'MultiSelect','off');
     co2File = char([PathIn FileIn]);

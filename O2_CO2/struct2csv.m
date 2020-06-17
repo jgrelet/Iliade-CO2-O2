@@ -49,7 +49,7 @@ for rr = 1:t
         if ischar(s(rr).(headers{ii}))
             sz(ii,2) = 1;
         end
-        l = [l,headers{ii},repmat(',',1,sz(ii,2)-1)];
+        l = [l,'',headers{ii},';',repmat(';',1,sz(ii,2)-1)];
     end
 
     l = [l,'\n'];
@@ -88,7 +88,7 @@ for rr = 1:t
                         end
                     elseif ischar(c{1,1})
                         for kk = 1:sz(jj,2)
-                            str = [str,c{ii,kk}];
+                            str = [str,'"',c{ii,kk},'",'];
                         end
                     end
                 end

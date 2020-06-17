@@ -23,24 +23,41 @@ function interpFile = interpTSG_CO2(co2File, tsgFile)
 % selectTSG, interp
 
 disp("TSG CO2 interpolation ...");
-
+if nargin ~= 2
+    disp("Select the CO2 file");
+    [FileIn, PathIn] = uigetfile( '*.csv', 'Select the CO2 file', 'MultiSelect','off');
+    co2File = char([PathIn FileIn]);
+ 
+    fid    = fopen( co2File, 'r' );
+    if fid == -1
+        error("File not found");
+    end
+    
+    disp("Select the tsg file");
+    [FileIn, PathIn] = uigetfile( '*.csv', 'Select the tsg file', 'MultiSelect','off');
+    tsgFile = char([PathIn FileIn]);
+    fid    = fopen( tsgFile, 'r' );
+    if fid == -1
+        error("File not found");
+    end
+end
 % Lecture du fichier CO2
 % ----------------------
-[co2, co2File, error] = readConcatCO2(co2File);
+[co2, co2File, err] = readConcatCO2(co2File);
 
-if error
+if err
     
     % Lecture du fichier .ini
     % -----------------------
-    [~, error1] = readIniCo2(co2File);
+    [~, err1] = readIniCo2(co2File);
     
-    if error1
+    if err1
         
         % Lecture du fichier TSG
         % ----------------------
-        [tsg, error2] = readAsciiTsgCO2(tsgFile);
+        [tsg, err2] = readAsciiTsgCO2(tsgFile);
         
-        if error2
+        if err2
             
 %             figure( 'Name', 'PlotYY' )
 %             [AX,H1,H2] = plotyy(tsg.DAYD, tsg.SSPS, co2.DAYD, co2.CO2_PHYS ); %#ok<PLOTYY>

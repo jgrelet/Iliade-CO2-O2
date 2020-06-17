@@ -1,4 +1,4 @@
-function interpFile = interpCO2_O2(co2interpCo2_O2File, o2File, varargin)
+function interpFile = interpCO2_O2(co2interpCo2_O2File, o2File)
     %
     % interpCo2_O2olation of O2 measure at co2 dates.
     % At the end, we will add the following columns to the .csv:

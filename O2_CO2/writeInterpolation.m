@@ -10,6 +10,8 @@ function interpFile = writeInterpolation(co2)
         warndlg( msg_error, 'ASCII error dialog');
     else
         disp(strcat("... Writing results in : ", interpFile));
+        % We remove the DAYD field
+        co2 = rmfield(co2, 'DAYD');
         struct2csv(co2,interpFile);
         fclose(fidOut);
     end

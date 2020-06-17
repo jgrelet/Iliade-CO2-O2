@@ -15,20 +15,40 @@ function main(co2File, tsgFile, o2File)
         disp("Select the CO2 file");
         [FileIn, PathIn] = uigetfile( '*.csv', 'Select the CO2 file', 'MultiSelect','off', 'tests/exemple');
         co2File = char([PathIn FileIn]);
-        disp(char(co2File));
+        
+        fid = fopen(co2File, 'r');
+        if fid == -1
+            error("File not found");
+        end
+        fclose(fid);
 
         % TSG file
         disp("Select the TSG file");
         [FileIn, PathIn] = uigetfile( '*.tsgqc', 'Select the TSG file', 'MultiSelect','off', 'tests/exemple');
         tsgFile = char([PathIn FileIn]);
-        disp(char(tsgFile));
+        
+        fid = fopen(tsgFile, 'r');
+        if fid == -1
+            error("File not found");
+        end
+        fclose(fid);
         
         % O2 file
         disp("Select the O2 file");
         [FileIn, PathIn] = uigetfile( '*.oxy', 'Select the O2 file', 'MultiSelect','off', 'tests/exemple');
         o2File = char([PathIn FileIn]);
-        disp(char(o2File));
+        
+        fid = fopen(o2File, 'r');
+        if fid == -1
+            error("File not found");
+        end
+        fclose(fid);
     end
+    disp("=== Files ===");
+    disp(char(co2File));
+    disp(char(tsgFile));
+    disp(char(o2File));
+    disp("=============");
     
     if ~exist("figs", 'dir')
         disp("Creation of figs folder");
