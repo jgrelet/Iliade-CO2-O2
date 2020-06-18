@@ -20,7 +20,8 @@ classdef TestO2Compensation < matlab.unittest.TestCase
     
     methods(Test)
         function compensationTest(testCase)
-
+            import matlab.unittest.constraints.IsEqualTo
+            import matlab.unittest.constraints.RelativeTolerance
             % without depth
             % O2 Concentration
             co2.OXYGEN_RAW  = [278.0, 131.27, 131.61, 131.35, 132.17...
@@ -41,15 +42,23 @@ classdef TestO2Compensation < matlab.unittest.TestCase
             exp.OXYGEN_ADJ_muM = [278.00, 106.82, 107.10, 106.89, 107.56...
                 197.96, 197.75, 197.54, 197.84, 198.00];
             exp.OXYGEN_ADJ_MLL = [6.23, 2.39, 2.40, 2.40, 2.41...
-                4.44, 4.43, 4.45, 4.43, 4.44];
+                4.44, 4.43, 4.43, 4.43, 4.44];
             exp.OXYGEN_SATURATION = [97.92, 46.33, 46.46, 46.39, 46.68...
                 88.66, 88.75, 88.84, 89.01, 89.09];
             
             actual = correctO2Data(co2,0);
             
-            testCase.verifyEqual(round(actual.OXYGEN_ADJ_muM, 0), round(exp.OXYGEN_ADJ_muM, 0));
-            testCase.verifyEqual(round(actual.OXYGEN_ADJ_MLL, 0), round(exp.OXYGEN_ADJ_MLL, 0));
-            testCase.verifyEqual(round(actual.OXYGEN_SATURATION, 0), round(exp.OXYGEN_SATURATION, 0));
+            testCase.assertThat(round(actual.OXYGEN_ADJ_muM, 2), ...
+                IsEqualTo(exp.OXYGEN_ADJ_muM, 'Within', ...
+                RelativeTolerance(0.02)));
+            
+            testCase.assertThat(round(actual.OXYGEN_ADJ_MLL, 2), ...
+                IsEqualTo(exp.OXYGEN_ADJ_MLL, 'Within', ...
+                RelativeTolerance(0.02)));
+            
+            testCase.assertThat(round(actual.OXYGEN_SATURATION, 2), ...
+                IsEqualTo(exp.OXYGEN_SATURATION, 'Within', ...
+                RelativeTolerance(0.02)));
             
         end
     end
