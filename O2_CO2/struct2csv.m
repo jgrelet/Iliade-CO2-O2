@@ -65,30 +65,30 @@ for rr = 1:t
             str = '';
             
             if sz(jj,1)<ii
-                str = repmat(',',1,sz(jj,2));
+                str = repmat(';',1,sz(jj,2));
             else
                 if isnumeric(c)
                     for kk = 1:sz(jj,2)
-                        str = [str,num2str(c(ii,kk)),','];
+                        str = [str,num2str(c(ii,kk)),';'];
                     end
                 elseif islogical(c)
                     for kk = 1:sz(jj,2)
-                        str = [str,num2str(double(c(ii,kk))),','];
+                        str = [str,num2str(double(c(ii,kk))),';'];
                     end
                 elseif ischar(c)
-                    str = ['"',c(ii,:),'",'];
+                    str = [c(ii,:),'";'];
                 elseif iscell(c)
                     if isnumeric(c{1,1})
                         for kk = 1:sz(jj,2)
-                            str = [str,num2str(c{ii,kk}),','];
+                            str = [str,num2str(c{ii,kk}),';'];
                         end
                     elseif islogical(c{1,1})
                         for kk = 1:sz(jj,2)
-                            str = [str,num2str(double(c{ii,kk})),','];
+                            str = [str,num2str(double(c{ii,kk})),';'];
                         end
                     elseif ischar(c{1,1})
                         for kk = 1:sz(jj,2)
-                            str = [str,'"',c{ii,kk},'",'];
+                            str = [str,c{ii,kk},';'];
                         end
                     end
                 end

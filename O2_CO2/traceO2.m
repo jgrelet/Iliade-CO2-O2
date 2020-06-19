@@ -43,23 +43,21 @@ function traceO2(fileIn)
     % We suppress the header
     co2Data(1,:) = [];
     co2Data(:,41) = [];
-    
     co2 = struct;
     % Manual conversion to structure
     % table2struct format do not produce a good structure
     for i = 1:size(varNames,2)
         co2.(char(varNames(i))) = co2Data.(char(varNames(i)));
     end
-    disp(co2.OXYGEN_ADJ_muM);
+
     %% Trace of the O2 Compensated data in µM
     % We are looking for the data that is not the default data
-    ind = find(co2.OXYGEN_ADJ_muM ~= 0);
+    ind = find(co2.OXYGEN_ADJ_muM > 0);
     dates = co2.DATE_TIME(ind);
     dates = datetime(dates, 'Format', 'dd/MM/yyyy HH:mm:SS');
-    
+
     figure('Name','Oxygen Compensated µM','NumberTitle','off');
+
     plot(dates, co2.OXYGEN_ADJ_muM(ind));
-    hold on
-    
 
 end

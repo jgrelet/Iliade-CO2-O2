@@ -77,10 +77,19 @@ function [co2] = correctO2Data(co2, salinity)
     co2.OXYGEN_ADJ_MLL = -999 * ones(size(co2.SSJT)); % default value
     co2.OXYGEN_SATURATION = -999 * ones(size(co2.SSJT)); % default value
     
-    co2.OXYGEN_ADJ_muM(ind) = o2Concentration_muM;
+    disp("... Removing irrelevant data");
     
-    co2.OXYGEN_ADJ_MLL(ind) = o2Concentration_MLL;
+    o2Concentration_muM = real(o2Concentration_muM);
+    relevant = o2Concentration_muM > 0;
+    co2.OXYGEN_ADJ_muM(relevant) = o2Concentration_muM(relevant);
     
-    co2.OXYGEN_SATURATION(ind) = o2Saturation;
-    disp("... correctO2Data");
+    o2Concentration_MLL = real(o2Concentration_MLL);
+    relevant = o2Concentration_MLL > 0;
+    co2.OXYGEN_ADJ_MLL(relevant) = o2Concentration_MLL(relevant);
+    
+    o2Saturation = real(o2Saturation);
+    relevant = o2Saturation > 0;
+    co2.OXYGEN_SATURATION(relevant) = o2Saturation(relevant);
+    disp("... correctO2Data : DONE");
+    
 end
