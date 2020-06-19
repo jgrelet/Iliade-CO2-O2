@@ -1,4 +1,4 @@
-function traceCO2(fileIn)
+function traceCO2
 %
 % Tracé d'un fichier CO2 navires marchands au format *.csv 
 %
@@ -29,15 +29,12 @@ HeaderIn = ['Type;error;Date Time; GPS time; latitude; longitude;'...
 
 % Sélection et ouverture du fichier
 % ---------------------------------
-if nargin == 0
-   [FileIn, PathIn] = uigetfile( '*.csv', 'Read file name', 'MultiSelect','off');
-   fileIn = char([PathIn FileIn]);
-end
+[FileIn, PathIn] = uigetfile( '*.csv', 'Read file name', 'MultiSelect','off');
+fileIn = char([PathIn FileIn]);
+disp(char(FileIn))
 
 % ouverture du fichier
 % --------------------
-fileIn = char([PathIn FileIn]);
-disp(char(FileIn))
 fid    = fopen( fileIn, 'r' );
 
 data = [];

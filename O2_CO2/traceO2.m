@@ -2,9 +2,11 @@ function traceO2(fileIn)
     % This function will show the quantity of O2 during a period of time
     
     %% Get data from file
-    if nargin == 0
-       [FileIn, PathIn] = uigetfile( '*.csv', 'Read CO2 file name', 'MultiSelect','off');
-           fileIn = char([PathIn FileIn]);
+    if nargin ~= 1
+        disp("Select the O2/CO2 interpolation file");
+       [FileIn, PathIn] = uigetfile( '*.csv', 'Select the O2/CO2 interpolation file', 'MultiSelect','off', '../tests');
+       fileIn = char([PathIn FileIn]);
+       disp(fileIn);
     end
     
     % File opening check
@@ -48,16 +50,16 @@ function traceO2(fileIn)
     for i = 1:size(varNames,2)
         co2.(char(varNames(i))) = co2Data.(char(varNames(i)));
     end
-    
+    disp(co2.OXYGEN_ADJ_muM);
     %% Trace of the O2 Compensated data in µM
     % We are looking for the data that is not the default data
-    ind = find(co2.OXYGEN_ADJ_muM >= 0);
-    
+    ind = find(co2.OXYGEN_ADJ_muM ~= 0);
     dates = co2.DATE_TIME(ind);
     dates = datetime(dates, 'Format', 'dd/MM/yyyy HH:mm:SS');
     
     figure('Name','Oxygen Compensated µM','NumberTitle','off');
     plot(dates, co2.OXYGEN_ADJ_muM(ind));
+    hold on
     
 
 end

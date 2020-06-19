@@ -36,11 +36,10 @@ At the begining of the execution, the program will ask you to choose files:
 * The second is the .tsgqc file : the thermosalinograph output file
 * The third file is the .oxy file : the optode output file
 
-At the end of the execution, the program will print in the console the path to both interpolation files
-you can you use the trace function in order to visualize the data:
+if you want to visualize data, you can run the trace function:
 
 ```matlab
->> trace co2InterpolationFile o2InterpolationFile
+>> trace
 ```
 
 ### TSG CO2 Interpolation
