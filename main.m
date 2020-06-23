@@ -6,8 +6,8 @@ function main(co2File, tsgFile, o2File)
     % o2  => .oxy
     
     
-    addpath("TSG_CO2");
-    addpath("O2_CO2");
+    %addpath("TSG_CO2");
+    %addpath("O2_CO2");
     
     % If there is no input parameter, the user will have to get them
     if nargin == 0
@@ -63,7 +63,7 @@ function main(co2File, tsgFile, o2File)
     disp(strcat("TSG and CO2 interpolation saved in : ", tsgCo2InterpFile));
     disp(strcat("O2 and CO2 interpolation saved in : ", o2Co2interpFile));
     
-    rmpath("TSG_CO2");
-    rmpath("O2_CO2");
+    %rmpath("TSG_CO2");
+    %rmpath("O2_CO2");
 
 end
