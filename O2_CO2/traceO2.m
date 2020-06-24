@@ -52,12 +52,26 @@ function traceO2(fileIn)
 
     %% Trace of the O2 Compensated data in µM
     % We are looking for the data that is not the default data
-    ind = find(co2.OXYGEN_ADJ_muM > 0);
+    ind = co2.OXYGEN_ADJ_muM > 0;
     dates = co2.DATE_TIME(ind);
     dates = datetime(dates, 'Format', 'dd/MM/yyyy HH:mm:SS');
 
     figure('Name','Oxygen Compensated µM','NumberTitle','off');
 
     plot(dates, co2.OXYGEN_ADJ_muM(ind));
+    %title('Oxygen Compensated µM')
+    %xlabel('Date')
+    ylabel('µM')
+    
+    ind = co2.OXYGEN_ADJ_MLL > 0;
+    dates = co2.DATE_TIME(ind);
+    dates = datetime(dates, 'Format', 'dd/MM/yyyy HH:mm:SS');
+    figure('Name','Oxygen Compensated ml/l','NumberTitle','off');
+    plot(dates, co2.OXYGEN_ADJ_MLL(ind));
+    %title('Oxygen Compensated µM')
+    %xlabel('Date')
+    ylabel('ml/l')
+    
+    hold on
 
 end

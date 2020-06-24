@@ -125,9 +125,9 @@ if err
             % -------------------------------------------------------------------
             % TRACE
             % -------------------------------------------------------------------
-            if ~exist("figs", 'dir')
-               mkdir("figs")
-            end
+%             if ~exist("figs", 'dir')
+%                mkdir("figs")
+%             end
 %             figure( 'Name', 'Latitude');
 %             hold on;
 %             plot( co2.DAYD, co2.LATX, 'b.');
