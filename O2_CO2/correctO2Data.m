@@ -80,16 +80,13 @@ function [co2] = correctO2Data(co2, salinity)
     disp("... Removing irrelevant data");
     
     o2Concentration_muM = real(o2Concentration_muM);
-    relevant = o2Concentration_muM > 0;
-    co2.OXYGEN_ADJ_muM(relevant) = o2Concentration_muM(relevant);
+    co2.OXYGEN_ADJ_muM(ind) = o2Concentration_muM;
     
     o2Concentration_MLL = real(o2Concentration_MLL);
-    relevant = o2Concentration_MLL > 0;
-    co2.OXYGEN_ADJ_MLL(relevant) = o2Concentration_MLL(relevant);
+    co2.OXYGEN_ADJ_MLL(ind) = o2Concentration_MLL;
     
     o2Saturation = real(o2Saturation);
-    relevant = o2Saturation > 0;
-    co2.OXYGEN_SATURATION(relevant) = o2Saturation(relevant);
+    co2.OXYGEN_SATURATION(ind) = o2Saturation;
     disp("... correctO2Data : DONE");
     
 end

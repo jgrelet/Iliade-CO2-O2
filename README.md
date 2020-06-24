@@ -4,12 +4,15 @@ Integration of O2 and CO2 measurements
 
 ## USAGE
 
-In order to run the program, you will need the following files:
+In order to run the program, you need to add the folder to the MATLAB path
+
+ you will need the following files:
 
 * co2 data file with .csv format
 * tsg data file with .tsgqc format
 * o2 data file with .oxy format
 
+Note that the co2 file must be the result of the program concatCO2
 There is two parts in the program:
 
 * CO2 and TSG interpolation, in TSG_CO2 folder
