@@ -1,7 +1,7 @@
 function traceO2(fileIn)
     % This function will show the quantity of O2 during a period of time
     
-    %% Get data from file
+    % Get data from file
     if nargin ~= 1
         disp("Select the O2/CO2 interpolation file");
        [FileIn, PathIn] = uigetfile( '*.csv', 'Select the O2/CO2 interpolation file', 'MultiSelect','off', '../tests');
@@ -49,29 +49,33 @@ function traceO2(fileIn)
     for i = 1:size(varNames,2)
         co2.(char(varNames(i))) = co2Data.(char(varNames(i)));
     end
-
-    %% Trace of the O2 Compensated data in µM
-    % We are looking for the data that is not the default data
-    ind = co2.OXYGEN_ADJ_muM > 0;
-    dates = co2.DATE_TIME(ind);
-    dates = datetime(dates, 'Format', 'dd/MM/yyyy HH:mm:SS');
-
-    figure('Name','Oxygen Compensated µM','NumberTitle','off');
-
-    plot(dates, co2.OXYGEN_ADJ_muM(ind));
-    %title('Oxygen Compensated µM')
-    %xlabel('Date')
-    ylabel('µM')
     
-    ind = co2.OXYGEN_ADJ_MLL > 0;
-    dates = co2.DATE_TIME(ind);
-    dates = datetime(dates, 'Format', 'dd/MM/yyyy HH:mm:SS');
-    figure('Name','Oxygen Compensated ml/l','NumberTitle','off');
-    plot(dates, co2.OXYGEN_ADJ_MLL(ind));
-    %title('Oxygen Compensated µM')
-    %xlabel('Date')
-    ylabel('ml/l')
+    disp("... Getting min and max lat/lon");
+    margin = 10;
+    maxLat = max(co2.LATX);
+    minLat = min(co2.LATX);
     
-    hold on
-
+    maxLon = max(co2.LONX);
+    minLon = min(co2.LONX);
+    
+    m_proj('mercator','longitudes', [minLon - margin, maxLon + margin],...
+        'latitudes',[minLat - margin, maxLat + margin]);
+    m_coast('patch',[.7 .7 .7],'edgecolor','none');
+    m_grid;
+    
+    disp("... Defining color for data");
+    
+    colors = colormap;
+    % Get only the real data
+    data = real(co2.OXYGEN_ADJ_muM);
+    %disp(co2);
+    maxVal = max(data);
+    ind = find(data > 0);
+    data = data(ind);
+    step = maxVal / size(colors,1);
+    idx = round((data ./ step), 0);
+    rdx = idx ~= 0;
+    cols = [ colors(idx(rdx), 1), colors(idx(rdx), 2), colors(idx(rdx), 3) ];
+    %m_line(co2.LONX, co2.LATX, 'color',...
+    %   cols );
 end
