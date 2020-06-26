@@ -39,7 +39,12 @@ At the begining of the execution, the program will ask you to choose files:
 * The second is the .tsgqc file : the thermosalinograph output file
 * The third file is the .oxy file : the optode output file
 
-if you want to visualize data, you can run the trace function:
+If you want to visualize data, you will need the m_map package. You can download it [here](http://www.eos.ubc.ca/~rich/m_map1.4.zip)
+Once you will have download it, unzip it where you want and add it path to your MATLAB path.
+Then, you will have to download the [maps](https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhs/latest/).
+uncompress the content and put it in m_map/private
+
+Then, you can run the trace function:
 
 ```matlab
 >> trace
