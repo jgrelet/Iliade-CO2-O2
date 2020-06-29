@@ -84,7 +84,7 @@ function traceO2(fileIn)
     
     % Colorbar
     % [posX posY] height, data, [gap]
-    m_contfbar( [.3 .7],.98, data,[0:maxVal],...
+    m_contfbar( [.3 .7],-.05, data,[0:maxVal],...
             'axfrac',.02,'endpiece','no','edgecolor','none'); 
     % Trip of the boat
     m_line(co2.LONX, co2.LATX, 'color', 'black');
@@ -93,7 +93,7 @@ function traceO2(fileIn)
         % Select of the color depending on the value of O2 µM
         ids = find(round((data ./ step), 0) == i);
         m_line(co2.LONX(ids), co2.LATX(ids),'LineStyle', 'none',...
-            'marker', 'o', 'markersize', 1 ,'color', colors(i,:));
+            'marker', '.', 'markersize', 5 ,'color', colors(i,:));
     end
     
     % we close the fig one which is opened by m_proj
