@@ -50,7 +50,7 @@ function traceO2(fileIn)
         co2.(char(varNames(i))) = co2Data.(char(varNames(i)));
     end
     %% Map handle
-    colors = colormap(jet);
+    colors = m_colmap('jet');
     % Get only the real data
     data = real(co2.OXYGEN_ADJ_muM);
     
@@ -60,6 +60,7 @@ function traceO2(fileIn)
     data = data(ind);
     step = maxVal / size(colors,1);
     maxVal = max(data);
+    
     disp("... Printing map");
     
     % Allow a projection a bit bigger than the area in the file
@@ -81,11 +82,17 @@ function traceO2(fileIn)
         'latitudes',[minLat - margin maxLat + margin]);
     m_coast('patch',[.7 .7 .7],'edgecolor','none');
     m_grid;
+    title("O2 µM concentration during the trip",  'fontsize',10,...
+    'fontweight', 'bold', 'interpreter','none');
     
     % Colorbar
     % [posX posY] height, data, [gap]
-    m_contfbar( [.3 .7],-.05, data,[0:maxVal],...
-            'axfrac',.02,'endpiece','no','edgecolor','none'); 
+    h = m_contfbar( [.3 .7],-.085, data,(0:maxVal+10),...
+            'axfrac',.02,'endpiece','no','edgecolor','none',...
+            'levels', step); 
+    title(h,"O2 µM concentration",  'fontsize',10,...
+    'fontweight', 'bold', 'interpreter','none');
+
     % Trip of the boat
     m_line(co2.LONX, co2.LATX, 'color', 'black');
     
@@ -98,7 +105,7 @@ function traceO2(fileIn)
     
     % we close the fig one which is opened by m_proj
     close Figure 1
-    %% Display of curves
+    %% Display of charts
     % OXYGEN µM
     clear ind
     clear dates
@@ -106,7 +113,7 @@ function traceO2(fileIn)
     dates = co2.DATE_TIME(ind);
     dates = datetime(dates, 'Format', 'dd/MM/yyyy HH:mm:SS');
 
-    muM = figure('Name','Oxygen Compensated µM','NumberTitle','off',...
+    figure('Name','Oxygen Compensated µM','NumberTitle','off',...
         'Position',[200 150 500 350]);
 
     plot(dates, co2.OXYGEN_ADJ_muM(ind), 'color','black');
@@ -121,7 +128,7 @@ function traceO2(fileIn)
     dates = co2.DATE_TIME(ind);
     dates = datetime(dates, 'Format', 'dd/MM/yyyy HH:mm:SS');
     
-    mll = figure('Name','Oxygen Compensated ml/l','NumberTitle','off',...
+    figure('Name','Oxygen Compensated ml/l','NumberTitle','off',...
         'Position',[700 150 500 350]);
     plot(dates, co2.OXYGEN_ADJ_MLL(ind), 'color','black');
     title('Oxygen Compensated ml/l')
