@@ -4,7 +4,7 @@ function traceO2(fileIn)
     % Get data from file
     if nargin ~= 1
         disp("Select the O2/CO2 interpolation file");
-       [FileIn, PathIn] = uigetfile( '*.csv', 'Select the O2/CO2 interpolation file', 'MultiSelect','off', '../tests');
+       [FileIn, PathIn] = uigetfile( '*.csv', 'Select the O2/CO2 interpolation file', 'MultiSelect','off');
        fileIn = char([PathIn FileIn]);
        disp(fileIn);
     end

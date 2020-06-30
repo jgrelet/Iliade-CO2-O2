@@ -22,12 +22,12 @@ function interpFile = interpCO2_O2(co2interpCo2_O2File, o2File)
     % Reading of the CO2 and TSG interpCo2_O2olation
     if nargin ~=2
         disp("... Select the TSG/CO2 interpolation file");
-        [co2interpCo2_O2File, co2FileIn] = uigetfile( '*.csv', 'Select the TSG/CO2 interpolation file', 'MultiSelect','off', '../tests/exemple');
+        [co2interpCo2_O2File, pathIn] = uigetfile( '*.csv', 'Select the TSG/CO2 interpolation file', 'MultiSelect','off');
         
-        co2interpCo2_O2File = char([co2FileIn co2interpCo2_O2File]);
+        co2interpCo2_O2File = char([pathIn co2interpCo2_O2File]);
         disp(char(co2interpCo2_O2File))
         disp("... Select the O2 data file");
-        [o2File, o2FileIn] = uigetfile( '*.oxy', 'Select the O2 data file', 'MultiSelect','off', '../tests/exemple');
+        [o2File, o2FileIn] = uigetfile( '*.oxy', 'Select the O2 data file', 'MultiSelect','off', pathIn);
         
         o2File = char([o2FileIn o2File]);
         disp(char(o2File))
