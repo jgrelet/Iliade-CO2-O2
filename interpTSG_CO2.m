@@ -22,6 +22,14 @@ function interpFile = interpTSG_CO2(co2File, tsgFile)
 % Fonctions internes en fin de ce fichier :
 % selectTSG, interp
 
+fileName = mfilename;
+fulFilename = mfilename('fullpath');
+expr = strcat(fileName, '$');
+DEFAULT_PATH_FILE =  regexprep(fulFilename, expr, '');
+
+addpath(strcat(DEFAULT_PATH_FILE,filesep,"TSG_CO2"));
+addpath(strcat(DEFAULT_PATH_FILE,filesep,"O2_CO2"));
+
 disp("TSG CO2 interpolation ...");
 if nargin ~= 2
     disp("Select the CO2 file");
@@ -270,6 +278,8 @@ if err
     end  % if error1
 end  % if error
 disp(">> interpTSG_CO2 : DONE <<");
+rmpath(strcat(DEFAULT_PATH_FILE,filesep,"TSG_CO2"));
+rmpath(strcat(DEFAULT_PATH_FILE,filesep,"O2_CO2"));
 end
 
 %% Fonction selectTS

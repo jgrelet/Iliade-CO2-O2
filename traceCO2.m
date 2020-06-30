@@ -29,7 +29,8 @@ HeaderIn = ['Type;error;Date Time; GPS time; latitude; longitude;'...
 
 % Sélection et ouverture du fichier
 % ---------------------------------
-[FileIn, PathIn] = uigetfile( '*.csv', 'Read file name', 'MultiSelect','off');
+disp("Select the result of the concatCO2 function (should be a .csv file with i in it name)");
+[FileIn, PathIn] = uigetfile( '*.csv', 'Select the concatened CO2 file', 'MultiSelect','off');
 fileIn = char([PathIn FileIn]);
 disp(char(FileIn))
 

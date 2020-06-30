@@ -63,8 +63,5 @@ function main(co2File, tsgFile, o2File)
     
     disp(strcat(">> TSG and CO2 interpolation saved in : ", tsgCo2InterpFile));
     disp(strcat(">> O2 and CO2 interpolation saved in : ", o2Co2interpFile));
-    
-    rmpath(strcat(DEFAULT_PATH_FILE,filesep,"TSG_CO2"));
-    rmpath(strcat(DEFAULT_PATH_FILE,filesep,"O2_CO2"));
 
 end

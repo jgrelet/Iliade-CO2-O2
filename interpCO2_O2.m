@@ -17,6 +17,14 @@ function interpFile = interpCO2_O2(co2interpCo2_O2File, o2File)
     %
     % Internal functions :
 
+    fileName = mfilename;
+    fulFilename = mfilename('fullpath');
+    expr = strcat(fileName, '$');
+    DEFAULT_PATH_FILE =  regexprep(fulFilename, expr, '');
+    
+    addpath(strcat(DEFAULT_PATH_FILE,filesep,"TSG_CO2"));
+    addpath(strcat(DEFAULT_PATH_FILE,filesep,"O2_CO2"));
+    
     disp("O2 CO2 interpolation ...");
     
     % Reading of the CO2 and TSG interpCo2_O2olation
@@ -51,6 +59,9 @@ function interpFile = interpCO2_O2(co2interpCo2_O2File, o2File)
     
     interpFile = writeInterpolation(co2);
     disp(">> interpCO2_O2 : DONE <<");
+    
+    rmpath(strcat(DEFAULT_PATH_FILE,filesep,"TSG_CO2"));
+    rmpath(strcat(DEFAULT_PATH_FILE,filesep,"O2_CO2"));
 end
 
     
