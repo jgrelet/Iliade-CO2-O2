@@ -59,8 +59,7 @@ Then, you can visualize all the data :
 >> traceMap
 ```
 
-You can also run interpolation separatly.
-You have to start with the CO2/TSG interpolation because the result file is needed for the CO2/O2 :
+You can also run interpolations separatly. You have to start with the CO2/TSG interpolation because the result file is needed for the CO2/O2 :
 
 * interpTSG_CO2(co2File, tsgFile)
 
@@ -88,24 +87,6 @@ This will test the following functions:
 * readInterpTSG_CO2
 * interpCo2_O2
 * correctO2Data
-
-For more details about them, move yourself to the tests folder by running the following command in the command prompt:
-
-```matlab
->> cd tests
-```
-
-then, run
-
-```matlab
->> ls
-```
-
-The following files will be there :
-
-* TestFiles.m
-* TestO2Compensation.m
-* TestInterpolation.m
 
 ### Reading module : TestFiles
 

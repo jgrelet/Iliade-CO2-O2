@@ -1,4 +1,8 @@
 function traceMap(fileIn)
+    % Print two maps with CO2 and O2 data
+    % Input file : CO2 O2 result file from "interpCO2_O2" program
+    % You need the m_map package to run this function
+
 
     % Get data from file
     if nargin ~= 1
@@ -31,10 +35,12 @@ function traceMap(fileIn)
         
     %% O2 Map
     colorsO2 = m_colmap('jet');
+    
+    maxVal = 300; % maximum value of O2
+    
     % Get only the real data
     data = real(co2.OXYGEN_ADJ_muM);
 
-    maxVal = max(data);
     % We select the data > 0. The rest is the default data
     ind = data > 0;
     data = data(ind);
@@ -56,7 +62,7 @@ function traceMap(fileIn)
 
     % Colorbar
     % [posX posY] height, data, [gap]
-    h = m_contfbar( [.3 .7],-.085, data,(0:300),...
+    h = m_contfbar( [.3 .7],-.085, data,(0:maxVal),...
         'axfrac',.02,'endpiece','no','edgecolor','none',...
         'levels', step); 
     title(h,"O2 \muM concentration",  'fontsize',10,...
@@ -73,11 +79,12 @@ function traceMap(fileIn)
     end
     
     %% CO2 Map
+    maxVal = 300; % max value of CO2
+
     colorsCO2 = m_colmap('jet');
     % Get only the real data
     data = real(co2.CO2_PHYS);
 
-    maxVal = max(data);
     % We select the data > 0. The rest is the default data
     ind = data > 0;
     data = data(ind);
@@ -99,7 +106,7 @@ function traceMap(fileIn)
 
     % Colorbar
     % [posX posY] height, data, [gap]
-    h = m_contfbar( [.3 .7],-.085, data,(0:maxVal+10),...
+    h = m_contfbar( [.3 .7],-.085, data,(0:maxVal),...
         'axfrac',.02,'endpiece','no','edgecolor','none',...
         'levels', step); 
     title(h,"CO2 concentration",  'fontsize',10,...
