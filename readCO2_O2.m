@@ -1,6 +1,11 @@
 function co2 = readCO2_O2(fileIn)
+    % Read the result file of "interpCO2_O2"
+    % Input :
+    % * fileIn  : result file of "interpCO2_O2" with .csv extension
+    % Output :
+    % * co2     : a structure with the file data
 
-    % Read the file
+    % Output structure
     varNames = {'DATE_TIME', 'GPS_TIME', 'TYPE', 'ERROR', 'LATX', 'LONX',...
                 'LATX_INT','LONX_INT',...
                 'EQU_T', 'STD', 'CO2_RAW', 'CO2_PHYS', 'H2O_RAW', 'H2O_PHYS', ...
@@ -8,7 +13,7 @@ function co2 = readCO2_O2(fileIn)
                 'EQU_PUMP', 'VENT_FLOW', 'COND_T', 'COND_ATM', 'COND_EQU', ...
                 'DRIP_1', 'DRIP_2', 'DRY_BOX_T', 'DECK_BOX_T', ...
                 'SSPS', 'SSPS_QC', 'SSJT', 'SSJT_QC', 'SSJT_COR', 'EQU_T_COR', ...
-                'OXYGEN_RAW','OXYGEN_ADJ_muM','OXYGEN_TEMPERATURE','OXYGEN_ADJ_MLL','OXYGEN_SATURATION'} ;
+                'OXYGEN_RAW','OXYGEN_TEMPERATURE','OXYGEN_ADJ_muM','OXYGEN_ADJ_MLL','OXYGEN_SATURATION'} ;
 
     varTypes = {'char','char','char','single','double','double',...
                 'double', 'double', ...
@@ -24,14 +29,20 @@ function co2 = readCO2_O2(fileIn)
                                     'VariableTypes',varTypes,...
                                     'Delimiter',delimiter);
     co2Data = readtable(fileIn, opts);
+
     % We suppress the header
     co2Data(1,:) = [];
     co2Data(:,41) = [];
+    
+    % *1
     co2 = struct;
     % Manual conversion to structure
     % table2struct format do not produce a good structure
     for i = 1:size(varNames,2)
         co2.(char(varNames(i))) = co2Data.(char(varNames(i)));
     end
+
+    % if this work, remove the code after *1 to this comment
+    % co2 = table2struct(co2Data,'ToScalar',true);
 
 end

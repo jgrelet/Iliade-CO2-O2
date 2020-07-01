@@ -1,4 +1,13 @@
 function [co2] = interpolation(co2, o2)
+    % Interpolation of the CO2 and O2 data at the CO2 dates
+    % Input : 
+    % * co2                 : CO2 structure
+    % * o2                  : O2 structure
+    % Output the co2 structure with new columns :
+    % * OXYGEN_RAW          : The raw concentration of oxygen in  \muM
+    % * OXYGEN_SATURATION   : The oxygen saturation in %
+    % * OXYGEN_TEMPERATURE  : The temperature measured
+
     disp("... Interpolation of CO2 and O2 data");
     PARA = {'OXYGEN_RAW', 'OXYGEN_SATURATION', 'OXYGEN_TEMPERATURE'};
     % Conversion of the date in serial date
@@ -15,7 +24,7 @@ function [co2] = interpolation(co2, o2)
             case 'OXYGEN_TEMPERATURE'
                 defaultPARA = -999;
             otherwise
-                disp('Nom de variable inconnu');
+                disp('Unknow variable');
                 return;
         end
         
@@ -41,5 +50,5 @@ function [co2] = interpolation(co2, o2)
         
         co2.(par)(indmin:indmax) = interp1(o2.DAYD, o2.(par), co2.DAYD(indmin:indmax));
     end % end for
-    disp("... interpolation : OK");
+    disp("... interpolation : DONE");
 end

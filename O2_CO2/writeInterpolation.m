@@ -1,4 +1,9 @@
 function interpFile = writeInterpolation(co2)
+    % Write the data to a result file
+    % Input :
+    % * co2 : The co2 structure to write with the new fields
+    % Output : The paht to the file where the user choose to save the data.
+
     disp("... Choose the location for the result file interpolation O2/CO2 ");
     [FileOut,PathOut] = uiputfile('*.csv','O2 CO2 interpolation result file');
     interpFile = strcat(PathOut, FileOut);
@@ -10,8 +15,10 @@ function interpFile = writeInterpolation(co2)
         warndlg( msg_error, 'ASCII error dialog');
     else
         disp(strcat("... Writing results in : ", interpFile, " Please wait ..."));
+
         % We remove the DAYD field
         co2 = rmfield(co2, 'DAYD');
+
         % We create an additonnal field to sort the data by the date
         % (some data were not sorted correctly)
         co2.TEMP_DATETIME = datetime(co2.DATE_TIME,'InputFormat','dd/MM/yyyy HH:mm:ss');
@@ -25,7 +32,7 @@ function interpFile = writeInterpolation(co2)
         % we remove the temp field
         co2 = rmfield(co2, 'TEMP_DATETIME');
         
-        % Wrting data to the file
+        % Writing data to the file
         struct2csv(co2,interpFile);
         fclose(fidOut);
     end

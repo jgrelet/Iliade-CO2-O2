@@ -1,6 +1,13 @@
 function [co2] = correctO2Data(co2, salinity)
+    % Correct the co2 data. This function is called by "interpCO2_O2" function
+    % Input :
     % co2       : the co2 structure
     % salinity  : salinity setting (default is 0)
+    % Output the co2 structure with new columns :
+    % * OXYGEN_ADJ_muM      : The oxygen concentration in \muM
+    % * OXYGEN_ADJ_MLL      : The oxygen concentration in ml/l
+    % * OXYGEN_SATURATION   : The oxygen saturation in %
+
     disp("... Correcting O2 data");
     depth = 0;
     S = co2.SSPS; % salinity
@@ -73,6 +80,7 @@ function [co2] = correctO2Data(co2, salinity)
     o2Saturation = 100 .* o2Concentration_muM ./ solubility;
     
     disp("... Writing data to structure");
+    % Default value is -999 which is an unreachable value for these data
     co2.OXYGEN_ADJ_muM = -999 * ones(size(co2.SSJT)); % default value
     co2.OXYGEN_ADJ_MLL = -999 * ones(size(co2.SSJT)); % default value
     co2.OXYGEN_SATURATION = -999 * ones(size(co2.SSJT)); % default value

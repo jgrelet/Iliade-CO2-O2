@@ -1,11 +1,14 @@
-% Get the co2 data from the previous interpolation
-function [co2, ok] = readInterpTSG_CO2(fileIn)
+function co2 = readInterpTSG_CO2(fileIn)
+    % Get the co2 data from the previous interpolation
+    % Input :
+    % * fileIn  : the interpolation file produce by "interpTSG_CO2" function
+    % Output :
+    % * co2     : the structure extracted from the file
     disp("... Reading the data from TSG/CO2 interpolation");
     
     % File opening check
     fid    = fopen( fileIn, 'r' );
     if(fid == -1)
-        ok = false;
         error('File not found');
     end
     fclose( fid );
@@ -36,13 +39,16 @@ function [co2, ok] = readInterpTSG_CO2(fileIn)
     co2Data(1,:) = [];
     co2Data(:,36) = [];
     
+    % *1
     co2 = struct;
     % Manual conversion to structure
     % table2struct format do not produce a good structure
     for i = 1:size(varNames,2)
         co2.(char(varNames(i))) = co2Data.(char(varNames(i)));
     end
+
+    % if this work, remove the code after *1 to this comment
+    % co2 = table2struct(co2Data,'ToScalar',true);
     
-    ok = true;
     disp("... readInterpTSG_CO2 : DONE");
 end

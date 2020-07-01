@@ -1,15 +1,11 @@
 function o2 = readAsciiO2(fileIn)
-    % readAsciiO2
-    % Function to read o2 data in ASCII format.
+    % Read O2 from an ASCII file 
     %
-    % Input
-    % -----
-    %
+    % Input :
+    % * fileIn : File to read
     % Output
-    % ------
-    % o2 ........ Structure with the relevant o2 data
-    % ok ........ false if there is a problem
-    % 
+    % * o2     : Structure with the relevant o2 data
+    
     disp("... Reading data from oxygen file");
     % CONSTANT
     fieldNumber = 25;
@@ -81,10 +77,7 @@ function o2 = readAsciiO2(fileIn)
     % Close the file
     % --------------
     fclose( fid );
-
-    % Everything OK
-    % -------------
-    ok = true;
+    
     disp("... readAsciiO2 : DONE");
 
 end
