@@ -1,17 +1,9 @@
-function main(co2File, tsgFile, o2File)
+function interpCO2_TSG_O2(co2File, tsgFile, o2File)
     % With this function, you will be able to run all interpolations
     % Input files :
-    % co2 => .csv
-    % tsg => .tsgqc
-    % o2  => .oxy
-    
-    fileName = mfilename;
-    fulFilename = mfilename('fullpath');
-    expr = strcat(fileName, '$');
-    DEFAULT_PATH_FILE =  regexprep(fulFilename, expr, '');
-    
-    addpath(strcat(DEFAULT_PATH_FILE,filesep,"TSG_CO2"));
-    addpath(strcat(DEFAULT_PATH_FILE,filesep,"O2_CO2"));
+    % 1. co2 => .csv
+    % 2. tsg => .tsgqc
+    % 3. o2  => .oxy
     
     % If there is no input parameter, the user will have to get them
     if nargin == 0
@@ -38,6 +30,8 @@ function main(co2File, tsgFile, o2File)
             error("File not found");
         end
         fclose(fid);
+
+        USER_PATH_FILE = PathIn;
         
         % O2 file
         disp("Select the O2 file");

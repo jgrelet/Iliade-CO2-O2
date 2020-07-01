@@ -1,56 +1,51 @@
-function interpFile = interpCO2_O2(co2interpCo2_O2File, o2File)
+function interpFile = interpCO2_O2(tsg_co2InterpFile, o2File)
     %
-    % interpCo2_O2olation of O2 measure at co2 dates.
-    % At the end, we will add the following columns to the .csv:
-    % O2_RAW      oxygen raw values
-    % O2_ADJ      oxygen values adjusted
-    % SATURATION  saturation
+    % Interpolation of O2 measure at co2 dates.
+    % At the end, the following columns will be add to the .csv:
+    % OXYGEN_RAW
+    % OXYGEN_SATURATION
+    % OXYGEN_TEMPERATURE
+    % OXYGEN_ADJ_muM
+    % OXYGEN_ADJ_MLL;
     %
     % Input :
-    % 1 - .csv file from function "interpCo2_O2TSG_CO2"
-    %     data is read with read interpCo2_O2
-    % 2 - Fichier ASCII de mesures TSG
-    %     Le fichier est ouvert via la fonction "readAsciiTsgCO2"
-    %
-    % External function call :
-    % readAsciiO2 readInterpTSG_CO2 interpCo2_O2
-    %
-    % Internal functions :
+    % 1 - .csv file from function "interpTSG_CO2"
+    % 2 - .oxy file : ASCII file with O2 data
 
+
+    % Get the location of this file
     fileName = mfilename;
     fulFilename = mfilename('fullpath');
     expr = strcat(fileName, '$');
     DEFAULT_PATH_FILE =  regexprep(fulFilename, expr, '');
     
+    % Adding local path
     addpath(strcat(DEFAULT_PATH_FILE,filesep,"TSG_CO2"));
     addpath(strcat(DEFAULT_PATH_FILE,filesep,"O2_CO2"));
     
     disp("O2 CO2 interpolation ...");
     
-    % Reading of the CO2 and TSG interpCo2_O2olation
+    % Check if files are present
     if nargin ~=2
         disp("... Select the TSG/CO2 interpolation file");
-        [co2interpCo2_O2File, pathIn] = uigetfile( '*.csv', 'Select the TSG/CO2 interpolation file', 'MultiSelect','off');
+        [tsg_co2InterpFile, pathIn] = uigetfile( '*.csv', 'Select the TSG/CO2 interpolation file', 'MultiSelect','off');
         
-        co2interpCo2_O2File = char([pathIn co2interpCo2_O2File]);
-        disp(char(co2interpCo2_O2File))
+        tsg_co2InterpFile = char([pathIn tsg_co2InterpFile]);
+        disp(char(tsg_co2InterpFile))
         disp("... Select the O2 data file");
         [o2File, o2FileIn] = uigetfile( '*.oxy', 'Select the O2 data file', 'MultiSelect','off', pathIn);
         
         o2File = char([o2FileIn o2File]);
         disp(char(o2File))
     end
-    % Get the co2 struct from the interpCo2_O2olation file
-    co2 = readInterpTSG_CO2(co2interpCo2_O2File);
+
+    % Get the CO2 data
+    co2 = readInterpTSG_CO2(tsg_co2InterpFile);
     
-    % Get the o2 data
-    % o2 is a struct with the following data :
-    % DAYD
-    % OXYGEN_RAW
-    % OXYGEN_SATURATION
-    % OXYGEN_TEMPERATURE
+    % Get the O2 data
     o2 = readAsciiO2(o2File);
     
+    % Interpolate the CO2 and O2 data
     co2 = interpolation(co2,o2);
     
     % Adjusting O2 DATA
@@ -60,6 +55,7 @@ function interpFile = interpCO2_O2(co2interpCo2_O2File, o2File)
     interpFile = writeInterpolation(co2);
     disp(">> interpCO2_O2 : DONE <<");
     
+    % Removing the local path
     rmpath(strcat(DEFAULT_PATH_FILE,filesep,"TSG_CO2"));
     rmpath(strcat(DEFAULT_PATH_FILE,filesep,"O2_CO2"));
 end

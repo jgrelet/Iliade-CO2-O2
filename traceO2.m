@@ -32,7 +32,7 @@ function traceO2(fileIn)
     plot(dates, co2.OXYGEN_ADJ_muM(ind), 'color','black');
     title('Oxygen Compensated µM')
     xlabel('Date')
-    ylabel('µM');
+    ylabel('\muM');
     
     % OXYGEN ml/l
     clear ind

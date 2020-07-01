@@ -1,22 +1,22 @@
 function interpFile = interpTSG_CO2(co2File, tsgFile)
 %
-% Interpolation des mesures TSG à la date des mesures CO2.
+% Interpolation des mesures TSG ï¿½ la date des mesures CO2.
 % Par rapport au fichier *.csv qui est lu, les variables suivantes sont
-% ajoutées au fichier final :
-% SSPS      salinité interpolée
-% SSPS_QC   code qualité de la salinité
-% SSJT      température de cuve du TSG
-% SSJT_QC   code qualité de la température de cuve
-% SSJT_COR  température de cuve corrigée (-9 si pas de correction)
-% EQU_T_COR température équilibrateur corrigée (-9 si pas de correction)
+% ajoutï¿½es au fichier final :
+% SSPS      salinitï¿½ interpolï¿½e
+% SSPS_QC   code qualitï¿½ de la salinitï¿½
+% SSJT      tempï¿½rature de cuve du TSG
+% SSJT_QC   code qualitï¿½ de la tempï¿½rature de cuve
+% SSJT_COR  tempï¿½rature de cuve corrigï¿½e (-9 si pas de correction)
+% EQU_T_COR tempï¿½rature ï¿½quilibrateur corrigï¿½e (-9 si pas de correction)
 %
-% En entrée :
-% 1 - Fichier au format *.csv concaténé par le programme "concatCO2"
+% En entrï¿½e :
+% 1 - Fichier au format *.csv concatï¿½nï¿½ par le programme "concatCO2"
 %     Le fichier est ouvert via la fonction "readConcatCO2"
 % 2 - Fichier ASCII de mesures TSG
 %     Le fichier est ouvert via la fonction "readAsciiTsgCO2"
 %
-% Fonctions externes appelées :
+% Fonctions externes appelï¿½es :
 % readConcatCO2, readAsciiTsgCO2
 %
 % Fonctions internes en fin de ce fichier :
@@ -75,13 +75,13 @@ if err
 %             set(H2, 'LineStyle', 'None', 'Marker', '.', 'MarkerEdgeColor', 'r');
 %             legend('SSPS','CO2 PHYS', 'Location','SouthWest')
             
-            % Selection des mesures TSG. On sélectionne dans l'ordre :
-            % 1 - les données corrigées (ADJUSTED) - Code qualité 5
-            % 2 - les données non corrigées mais ayant un code qualité de 1 (GOOD) ou
+            % Selection des mesures TSG. On sï¿½lectionne dans l'ordre :
+            % 1 - les donnï¿½es corrigï¿½es (ADJUSTED) - Code qualitï¿½ 5
+            % 2 - les donnï¿½es non corrigï¿½es mais ayant un code qualitï¿½ de 1 (GOOD) ou
             %     2 (PROBABLY GOOD)
-            % 3 - les autres mesures de la série TSG sont remplacées par 35 pour la
-            %     salinité (SSPS) et -9 pour la température de cuve (SSJT). Dans ce cas
-            %     le code qualité est positionné à 9 (MISSING VALUE).
+            % 3 - les autres mesures de la sï¿½rie TSG sont remplacï¿½es par 35 pour la
+            %     salinitï¿½ (SSPS) et -9 pour la tempï¿½rature de cuve (SSJT). Dans ce cas
+            %     le code qualitï¿½ est positionnï¿½ ï¿½ 9 (MISSING VALUE).
             %
             % La fonction selectTSG se trouve en fin de fichier
             % -------------------------------------------------
@@ -92,7 +92,7 @@ if err
             % Attention : l'ordre dans lequel des fonctions d'interpolation est
             % important
             
-            % Interpolation des données TSG et traitement des cas particuliers
+            % Interpolation des donnï¿½es TSG et traitement des cas particuliers
             % ----------------------------------------------------------------
             [co2] = interp(co2, tsg);
             
@@ -101,7 +101,7 @@ if err
             [co2] = interp_POS(co2, tsg);
             
             % si un fichier .ini existe, effecuter les corrections et modifier le
-            % format d'écriture
+            % format d'ï¿½criture
             % -------------------------------------------------------------------
             co2.SSJT_COR = -999 * ones(size(co2.SSJT));
             co2.EQU_T_COR = -999 * ones(size(co2.EQU_T));
@@ -117,7 +117,7 @@ if err
             % %           formatOut = [formatOut ';%.2f'];
             %         end
             %
-            %         % Correction temperature équilibrateur
+            %         % Correction temperature ï¿½quilibrateur
             %         % ------------------------------------
             %         if ini.A_EQU_T ~= 1 || ini.B_EQU_T ~= 0
             %           co2.EQU_T_COR = ini.A_EQU_T * co2.EQU_T + ini.B_EQU_T;
@@ -126,7 +126,7 @@ if err
             %         end
             %       end
             
-            % Compléter le format d'écriture par un retour chariot
+            % Complï¿½ter le format d'ï¿½criture par un retour chariot
             % ----------------------------------------------------
             %       formatOut = [formatOut '\n'];
             
@@ -199,8 +199,8 @@ if err
                 'SSPS;SSPS_QC;SSJT;SSJT_QC;SSJT_COR;EQU_T_COR;'...
                 ];
             
-            % Ordre des champs de la structure co2. Les champs seront réordonnés
-            % dans l'ordre ci-dessous pour la préparation de l'écriture dans
+            % Ordre des champs de la structure co2. Les champs seront rï¿½ordonnï¿½s
+            % dans l'ordre ci-dessous pour la prï¿½paration de l'ï¿½criture dans
             % un fichier
             % -------------------------------------------------------------------
             StrucOrder = {'DAYD';'DATE';'GPS_TIME';'TYPE';'ERROR';'LATX';'LONX';...
@@ -212,9 +212,9 @@ if err
                 'SSPS';'SSPS_QC';'SSJT';'SSJT_QC';'SSJT_COR';'EQU_T_COR';...
                 };
             
-            % Format en écriture. Colonnes séparées par des ";" pour une
+            % Format en ï¿½criture. Colonnes sï¿½parï¿½es par des ";" pour une
             % lecture sous Excel
-            % Les colonnes Date et Time sont concaténées (placées entre 2 ";")
+            % Les colonnes Date et Time sont concatï¿½nï¿½es (placï¿½es entre 2 ";")
             % ---------------------------------------------------------------
             formatOut = ['%02d/%02d/%4d %02d:%02d:%02d;'...
                 '%s; %s; %d;%.4f;%.4f;'...
@@ -224,7 +224,7 @@ if err
                 '%.3f;%.0f;%.3f;%.0f;%.2f;%.2f;'...
                 '\n'];
             
-            % Nom du fichier en écriture et ouverture
+            % Nom du fichier en ï¿½criture et ouverture
             % ---------------------------------------
             disp("... Choose the location for the result file interpolation TSG/CO2 ");
             [FileOut,PathOut] = uiputfile('*.csv','O2 CO2 interpolation result file');
@@ -237,7 +237,7 @@ if err
                 error("Cannot open file");
             else
                 
-                % Réordonne les champs
+                % Rï¿½ordonne les champs
                 % --------------------
                 co2b = orderfields(co2, StrucOrder);
                 
@@ -287,10 +287,10 @@ end
 function [tsg] = selectTS(tsg)
 
 % Le code suivant permet :
-% 1 - d'initialiser la série temporelle de salinité (SSPS) à 35 et le code
-%     qualité à 9 (missing value)
-% 2 - de sélectionner la bonne variable.
-%      Soit tsg.SSPS avec un code qualité 1 (GOOD) ou 2 (PROBABLY GOOD),
+% 1 - d'initialiser la sï¿½rie temporelle de salinitï¿½ (SSPS) ï¿½ 35 et le code
+%     qualitï¿½ ï¿½ 9 (missing value)
+% 2 - de sï¿½lectionner la bonne variable.
+%      Soit tsg.SSPS avec un code qualitï¿½ 1 (GOOD) ou 2 (PROBABLY GOOD),
 %      Soit tsg.SSPS_ADJUSTED avec un code 5 (VALUE CHANGED)
 % ---------------------------------------------------------------------
 disp("... Selecting relevant TSG data");
@@ -307,7 +307,7 @@ for par = PARA
     
     para = char(par);
     
-    % intialisation des valeurs par défaut
+    % intialisation des valeurs par dï¿½faut
     % ------------------------------------
     switch para
         case 'SSPS'
@@ -319,22 +319,22 @@ for par = PARA
             return;
     end
     
-    % initialisation des variables intermédiaires
+    % initialisation des variables intermï¿½diaires
     % -------------------------------------------
     A    = defaultPARA * ones(size(tsg.(para)));
     A_QC = nomeasureQC * ones(size(tsg.(para)));
     
-    % Vérifie si la variable non ADJUSTED est vide.
-    % On sélectionne les données brutes ayant un code qualité 1 ou 2
-    % Par commodité on positionne le code qualité à 2 (PROBABLY GOOD)
+    % Vï¿½rifie si la variable non ADJUSTED est vide.
+    % On sï¿½lectionne les donnï¿½es brutes ayant un code qualitï¿½ 1 ou 2
+    % Par commoditï¿½ on positionne le code qualitï¿½ ï¿½ 2 (PROBABLY GOOD)
     % --------------------------------------------------------------
     ind = find( ~isnan( tsg.(para) ) & (tsg.([para '_QC']) < probablygoodQC+1 | tsg.([para '_QC']) == harbourQC));
     if ~isempty( ind )
         A( ind )      = tsg.(para)( ind );
         A_QC( ind )   = probablygoodQC;
         
-        % Si les mesures n'ont pas été controlées/validées, leur QC (0)est
-        % conservé
+        % Si les mesures n'ont pas ï¿½tï¿½ controlï¿½es/validï¿½es, leur QC (0)est
+        % conservï¿½
         % ----------------------------------------------------------------
         ind = find( tsg.([para '_QC']) == nocontrolQC);
         if ~isempty(ind)
@@ -343,9 +343,9 @@ for par = PARA
         
     end
     
-    % Vérifie si la variable corrigée (ADJUSTED) n'est pas vide
-    % Le code QC est forcé à 5
-    % Si des données ADJUSTED existent, elles écrasent les mesures brutes
+    % Vï¿½rifie si la variable corrigï¿½e (ADJUSTED) n'est pas vide
+    % Le code QC est forcï¿½ ï¿½ 5
+    % Si des donnï¿½es ADJUSTED existent, elles ï¿½crasent les mesures brutes
     % -------------------------------------------------------------------
     ind = find( ~isnan( tsg.([para '_ADJUSTED'])) );
     if ~isempty( ind )
@@ -358,7 +358,7 @@ for par = PARA
     
 end
 
-% % Test de tracé
+% % Test de tracï¿½
 % % -------------
 % figure( 'Name', 'selectTSG' )
 % %plot( tsg.DAYD,tsg.SSPS, 'k.')
@@ -410,8 +410,8 @@ probablygoodQC = 2;
 adjustedQC     = 5;
 nomeasureQC    = 9;
 
-% L'interpolation ne devrait pas être possible lorsqu'il y a des
-% données manquantes sur des périodes supérieures à dT heures.
+% L'interpolation ne devrait pas ï¿½tre possible lorsqu'il y a des
+% donnï¿½es manquantes sur des pï¿½riodes supï¿½rieures ï¿½ dT heures.
 % --------------------------------------------------------------
 dT = datenum(0,0,0,dTmax,0,0);
 
@@ -421,7 +421,7 @@ for par = PARA
     
     para = char(par);
     
-    % intialisation des valeurs par défaut
+    % intialisation des valeurs par dï¿½faut
     % ------------------------------------
     switch para
         case 'SSPS'
@@ -437,8 +437,8 @@ for par = PARA
     co2.([para '_QC']) =  nomeasureQC * ones(size(co2.DAYD));
     
     % Test les limites temporelles min et max pour lesquelles les mesures
-    % du TSG peuvent être interpolées à la position des mesures CO2.
-    % On n'utilise que les bonnes mesures TSG (code qualité < 9)
+    % du TSG peuvent ï¿½tre interpolï¿½es ï¿½ la position des mesures CO2.
+    % On n'utilise que les bonnes mesures TSG (code qualitï¿½ < 9)
     % -------------------------------------------------------------------
     ind = find( tsg.([para '_QC_SEL']) < nomeasureQC );
     
@@ -458,42 +458,42 @@ for par = PARA
         end
     end
     
-    % Interpolation des mesures TSG à la position des mesures CO2
-    % On n'utilise que les bonnes mesures (code qualité < 9)
+    % Interpolation des mesures TSG ï¿½ la position des mesures CO2
+    % On n'utilise que les bonnes mesures (code qualitï¿½ < 9)
     % ------------------------------------------------------------
     co2.(para)(indmin:indmax) = interp1(tsg.DAYD(ind), tsg.([para '_SEL'])(ind), co2.DAYD(indmin:indmax));
     co2.([para '_QC'])(indmin:indmax) = interp1(tsg.DAYD(ind), tsg.([para '_QC_SEL'])(ind), co2.DAYD(indmin:indmax));
     
-    % Code pour remplacer les valeurs interpolées sur des périodes
-    % supérieures à 2h, par les valeurs par défaut
+    % Code pour remplacer les valeurs interpolï¿½es sur des pï¿½riodes
+    % supï¿½rieures ï¿½ 2h, par les valeurs par dï¿½faut
     % ----------------------------------------------------------
     if ~isempty( ind )
         
-        % Calcul la différence de temps entre 2 mesures TSG correctes
+        % Calcul la diffï¿½rence de temps entre 2 mesures TSG correctes
         % -----------------------------------------------------------
         dTime = diff(tsg.DAYD(ind));
         
-        % Recherche les indices pour lesquels la différence de temps
-        % entre 2 mesures TSG correctes est supérieure à dT heures
+        % Recherche les indices pour lesquels la diffï¿½rence de temps
+        % entre 2 mesures TSG correctes est supï¿½rieure ï¿½ dT heures
         % ---------------------------------------------------------------
         ind2  = find(dTime > dT);
         
         if ~isempty(ind2)
             
-            % Boucle sur les périodes où les différences de temps sont
-            % supérieures à dT
+            % Boucle sur les pï¿½riodes oï¿½ les diffï¿½rences de temps sont
+            % supï¿½rieures ï¿½ dT
             % --------------------------------------------------------
             for i = 1:size(ind2,1)
                 
-                % Indices des heures de début et fin où les mesures ont été
-                % interpolées sur plus de dT heures
+                % Indices des heures de dï¿½but et fin oï¿½ les mesures ont ï¿½tï¿½
+                % interpolï¿½es sur plus de dT heures
                 % ---------------------------------------------------------
                 i1 = ind(ind2(i));
                 i2 = ind(ind2(i)+1);
                 
-                % Recherche les dates des mesures CO2 correspondant à
-                % des interpolations TSG supérieures à dT heures.
-                % Remplace les mesures TSG interpolées par les valeurs par défaut
+                % Recherche les dates des mesures CO2 correspondant ï¿½
+                % des interpolations TSG supï¿½rieures ï¿½ dT heures.
+                % Remplace les mesures TSG interpolï¿½es par les valeurs par dï¿½faut
                 % ---------------------------------------------------------------
                 ind3 = find( co2.DAYD > tsg.DAYD(i1) & co2.DAYD < tsg.DAYD(i2));
                 co2.(para)(ind3)    = defaultPARA;
@@ -503,9 +503,9 @@ for par = PARA
     end
     
     % Traitement des QC des mesures pour lesquelles il y a eu interpolation
-    % entre des mesures avec QC = probablyGOOD et des mesures corrigées
-    % avec QC = measureQC. On positionne les QC de ces mesures interpolées
-    % à measureQC
+    % entre des mesures avec QC = probablyGOOD et des mesures corrigï¿½es
+    % avec QC = measureQC. On positionne les QC de ces mesures interpolï¿½es
+    % ï¿½ measureQC
     % ---------------------------------------------------------------------
     ind = find( co2.([para '_QC']) > probablygoodQC & co2.([para '_QC']) <= adjustedQC);
     if ~isempty(ind)
@@ -513,9 +513,9 @@ for par = PARA
     end
     
     % Traitement des QC des mesures pour lesquelles il y a eu interpolation
-    % entre des mesures avec QC = probablyGOOD et des mesures non validées
-    % avec QC = nocontrolQC. On positionne les QC de ces mesures interpolées
-    % à nocontrolQC
+    % entre des mesures avec QC = probablyGOOD et des mesures non validï¿½es
+    % avec QC = nocontrolQC. On positionne les QC de ces mesures interpolï¿½es
+    % ï¿½ nocontrolQC
     % ---------------------------------------------------------------------
     ind = find( co2.([para '_QC']) >= nocontrolQC & co2.([para '_QC']) < probablygoodQC);
     if ~isempty(ind)
@@ -538,14 +538,14 @@ for par = PARA
     
     para = char(par);
     
-    % intialisation des valeurs par défaut
+    % intialisation des valeurs par dï¿½faut
     % ------------------------------------
     defaultPARA = NaN;
     
     co2.([para '_INT'])  = defaultPARA * ones(size(co2.DAYD));
     
     % Test les limites temporelles min et max pour lesquelles les mesures
-    % du TSG peuvent être interpolées à la position des mesures CO2.
+    % du TSG peuvent ï¿½tre interpolï¿½es ï¿½ la position des mesures CO2.
     % -------------------------------------------------------------------
     
     indmin = 1;
@@ -564,40 +564,40 @@ for par = PARA
         end
     end
     
-    % Interpolation des positions à la datedes mesures CO2
+    % Interpolation des positions ï¿½ la datedes mesures CO2
     % ------------------------------------------------------------
     co2.([para '_INT'])(indmin:indmax) = interp1(tsg.DAYD, tsg.(para), co2.DAYD(indmin:indmax));
     
-    %   % Code pour remplacer les valeurs interpolées sur des périodes
-    %   % supérieures à 2h, par les valeurs par défaut
+    %   % Code pour remplacer les valeurs interpolï¿½es sur des pï¿½riodes
+    %   % supï¿½rieures ï¿½ 2h, par les valeurs par dï¿½faut
     %   % ----------------------------------------------------------
     %   if ~isempty( ind )
     %
-    %     % Calcul la différence de temps entre 2 mesures TSG correctes
+    %     % Calcul la diffï¿½rence de temps entre 2 mesures TSG correctes
     %     % -----------------------------------------------------------
     %     dTime = diff(tsg.DAYD(ind));
     %
-    %     % Recherche les indices pour lesquels la différence de temps
-    %     % entre 2 mesures TSG correctes est supérieure à dT heures
+    %     % Recherche les indices pour lesquels la diffï¿½rence de temps
+    %     % entre 2 mesures TSG correctes est supï¿½rieure ï¿½ dT heures
     %     % ---------------------------------------------------------------
     %     ind2  = find(dTime > dT);
     %
     %     if ~isempty(ind2)
     %
-    %       % Boucle sur les périodes où les différences de temps sont
-    %       % supérieures à dT
+    %       % Boucle sur les pï¿½riodes oï¿½ les diffï¿½rences de temps sont
+    %       % supï¿½rieures ï¿½ dT
     %       % --------------------------------------------------------
     %       for i = 1:size(ind2,1)
     %
-    %         % Indices des heures de début et fin où les mesures ont été
-    %         % interpolées sur plus de dT heures
+    %         % Indices des heures de dï¿½but et fin oï¿½ les mesures ont ï¿½tï¿½
+    %         % interpolï¿½es sur plus de dT heures
     %         % ---------------------------------------------------------
     %         i1 = ind(ind2(i));
     %         i2 = ind(ind2(i)+1);
     %
-    %         % Recherche les dates des mesures CO2 correspondant à
-    %         % des interpolations TSG supérieures à dT heures.
-    %         % Remplace les mesures TSG interpolées par les valeurs par défaut
+    %         % Recherche les dates des mesures CO2 correspondant ï¿½
+    %         % des interpolations TSG supï¿½rieures ï¿½ dT heures.
+    %         % Remplace les mesures TSG interpolï¿½es par les valeurs par dï¿½faut
     %         % ---------------------------------------------------------------
     %         ind3 = find( co2.DAYD > tsg.DAYD(i1) & co2.DAYD < tsg.DAYD(i2));
     %         co2.(para)(ind3)    = defaultPARA;

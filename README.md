@@ -1,107 +1,78 @@
-# Iliade-CO2-O2 evolution version
+# Iliade-CO2-O2
 
 Integration of O2 and CO2 measurements
 
+## INSTALLING
+
+Follow these steps to install the project correctly :
+
+* Download the project [here](https://github.com/jgrelet/Iliade-CO2-O2/tree/master)
+* Open MATLAB
+* Add the project to the path
+* Download the m_map package [here](http://www.eos.ubc.ca/~rich/m_map1.4.zip)
+* Download the [maps](https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhs/latest/)
+* Unzip the maps and put them in the folder m_map/private
+* Add the m_map package to the MATLAB path
+
 ## USAGE
 
-In order to run the program, you need to add the folder to the MATLAB path
+In order to run the program, you will need the following data :
 
- you will need the following files:
+* co2 data : .csv file (result of the concatCO2 program)
+* tsg data : .tsgqc file
+* o2 data : .oxy file
 
-* co2 data file with .csv format
-* tsg data file with .tsgqc format
-* o2 data file with .oxy format
-
-Note that the co2 file must be the result of the program concatCO2
-There is two parts in the program:
-
-* CO2 and TSG interpolation, in TSG_CO2 folder
-* CO2/TSG and O2 interpolation, in O2_CO2 folder
-
-There one function that rule them all : main which is at the root of the project
-So if you want to run both interpolation at once, you can run the following command:
-
-If you know the path of ALL the files, then run :
+Once you add the project to path, you can run it from where you want using the following command :
 
 ```matlab
->> main co2FilePath tsgFilePath o2FilePath
+>> interpCO2_TSG_O2
 ```
 
-else :
+If you know the full path to your files, you can run the command with them in parameter :
 
 ```matlab
->> main
+>> interpCO2_TSG_O2 path2co2 path2tsg path2o2
 ```
 
-At the begining of the execution, the program will ask you to choose files:
+The result of the program will be two different files :
 
-* The first is the .csv file : the output of TSGQC program
-* The second is the .tsgqc file : the thermosalinograph output file
-* The third file is the .oxy file : the optode output file
+* CO2 and TSG interpolation
+* Previous interpolation and O2 interpolation
 
-If you want to visualize data, you will need the m_map package. You can download it [here](http://www.eos.ubc.ca/~rich/m_map1.4.zip)
-Once you will have download it, unzip it where you want and add it path to your MATLAB path.
-Then, you will have to download the [maps](https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhs/latest/).
-uncompress the content and put it in m_map/private
+Then, you can visualize all the data :
 
-Then, you can run the trace function:
+* CO2 data
 
 ```matlab
->> trace
+>> traceCO2
 ```
 
-### TSG CO2 Interpolation
-
-If you want to run the TSG CO2 interpolation, move to the correct folder:
+* Interpolated O2 data
 
 ```matlab
->> cd TSG_CO2
+>> traceO2
 ```
 
-Once there, you will have to run the interpolation.
-
-If you know the path to files, then run :
+* CO2 and O2 concentration on maps
 
 ```matlab
->> interpTSG_CO2 TSG_CO2FilePath o2FilePath
+>> traceMap
 ```
 
-else :
+You can also run interpolation separatly.
+You have to start with the CO2/TSG interpolation because the result file is needed for the CO2/O2 :
+
+* interpTSG_CO2(co2File, tsgFile)
 
 ```matlab
 >> interpTSG_CO2
 ```
 
-at the begining of the execution, the program will ask you to choose files:
-
-* The first is the .csv file : the output of TSGQC program
-* The second is the .tsgqc file : the thermosalinograph output file
-
-### O2 CO2 Interpolation
-
-If you want to run the O2 CO2 interpolation, move to the correct folder:
+* interpCO2_O2(tsg_co2InterpFile, o2File)
 
 ```matlab
->> cd O2_CO2
+>> interpCO2_O2
 ```
-
-**Note that you need the TSg/CO2 interpolation file for this one.**
-
-If you know the path to files, then run :
-
-```matlab
->> interpO2_CO2 TSG_CO2FilePath o2FilePath
-```
-
-else :
-
-```matlab
->> interpO2_CO2
-```
-
-* The first file you have to choose is the previous interpolation result
-* The second is the .oxy file : the optode output file
-* The program will ask you where you want to save the CO2/TSG/O2 interpolation
 
 ## UNIT TESTS
 
