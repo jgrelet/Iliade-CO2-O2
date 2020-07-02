@@ -9,7 +9,7 @@ function interpCO2_TSG_O2(co2File, tsgFile, o2File)
     if nargin == 0
         % CO2 file
         disp("Select the CO2 file");
-        [FileIn, PathIn] = uigetfile( '*.csv', 'Select the CO2 file', 'MultiSelect','off');
+        [FileIn, PathIn] = uigetfile( '*i.csv', 'Select the CO2 file', 'MultiSelect','off');
         co2File = char([PathIn FileIn]);
         
         fid = fopen(co2File, 'r');

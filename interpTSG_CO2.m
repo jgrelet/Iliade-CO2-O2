@@ -33,7 +33,7 @@ addpath(strcat(DEFAULT_PATH_FILE,filesep,"O2_CO2"));
 disp("TSG CO2 interpolation ...");
 if nargin ~= 2
     disp("Select the CO2 file");
-    [FileIn, PathIn] = uigetfile( '*.csv', 'Select the CO2 file', 'MultiSelect','off');
+    [FileIn, PathIn] = uigetfile( '*i.csv', 'Select the CO2 file', 'MultiSelect','off');
     co2File = char([PathIn FileIn]);
  
     fid    = fopen( co2File, 'r' );

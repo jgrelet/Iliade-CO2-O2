@@ -71,11 +71,11 @@ function traceMap(fileIn)
     % Trip of the boat
     m_line(co2.LONX, co2.LATX, 'color', 'black');
 
-    for i = 1:size(colors)
+    for i = 1:size(colorsO2)
     % Select of the color depending on the value of O2 µM
     ids = find(round((data ./ step), 0) == i);
     m_line(co2.LONX(ids), co2.LATX(ids),'LineStyle', 'none',...
-        'marker', '.', 'markersize', 5 ,'color', colors(i,:));
+        'marker', '.', 'markersize', 5 ,'color', colorsO2(i,:));
     end
     
     %% CO2 Map
@@ -115,11 +115,11 @@ function traceMap(fileIn)
     % Trip of the boat
     m_line(co2.LONX, co2.LATX, 'color', 'black');
 
-    for i = 1:size(colors)
+    for i = 1:size(colorsCO2)
     % Select of the color depending on the value of O2 µM
     ids = find(round((data ./ step), 0) == i);
     m_line(co2.LONX(ids), co2.LATX(ids),'LineStyle', 'none',...
-        'marker', '.', 'markersize', 5 ,'color', colors(i,:));
+        'marker', '.', 'markersize', 5 ,'color', colorsCO2(i,:));
     end
 
     
