@@ -159,6 +159,7 @@ classdef TestFiles < matlab.unittest.TestCase
             testCase.verifyEqual(expected_co2.CO2_RAW(13846), actual_co2.CO2_RAW(13846));
             testCase.verifyEqual(expected_co2.CO2_RAW(end), actual_co2.CO2_RAW(end));
             
+            delete(interpFile)
         end
         
     end

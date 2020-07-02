@@ -1,5 +1,5 @@
 classdef TestInterpolation < matlab.unittest.TestCase
-    % Test
+    % Test if we correctly interpolate the CO2 and O2 data
     
     properties
         files = {'exemple/CSLO1902/cslo1902.oxy',...

@@ -59,7 +59,7 @@ Then, you can visualize all the data :
 >> traceMap
 ```
 
-You can also run interpolations separatly. You have to start with the CO2/TSG interpolation because the result file is needed for the CO2/O2 :
+You can also run interpolations separatly. However, you need the result file of the first concatenation to run interpCO2_O2 :
 
 * interpTSG_CO2(co2File, tsgFile)
 
