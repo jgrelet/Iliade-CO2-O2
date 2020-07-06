@@ -19,37 +19,36 @@ function traceMap(fileIn)
     end
     fclose( fid );
 
-    co2 = readCO2_O2(fileIn);
+    data = readCO2_O2(fileIn);
 
     %% Map parameters
     % Allow a projection a bit bigger than the area in the file
     margin = 10;
 
     % Get the min and max latitudes
-    maxLat = max(co2.LATX);
-    minLat = min(co2.LATX);
+    maxLat = max(data.LATX);
+    minLat = min(data.LATX);
     % Get the min and max longitudes
-    maxLon = max(co2.LONX);
-    minLon = min(co2.LONX);
+    maxLon = max(data.LONX);
+    minLon = min(data.LONX);
     
         
     %% O2 Map
     colorsO2 = m_colmap('jet');
     
-    maxVal = 300; % maximum value of O2
-    
     % Get only the real data
-    data = real(co2.OXYGEN_ADJ_muM);
-
-    % We select the data > 0. The rest is the default data
-    ind = data > 0;
-    data = data(ind);
+    o2 = real(data.OXYGEN_ADJ_muM);
+    
+    % We select the o2 > 0. The rest is the default data
+    ind = o2 > 0;
+    o2 = o2(ind);
+    maxVal = max(o2); % maximum value of O2
     step = maxVal / size(colorsO2,1);
 
     disp("... Printing map");
 
     % Creating the figure for the map
-    map = figure('Name','map','NumberTitle','off',...
+    figure('Name','02 map','NumberTitle','off',...
     'Position',[1000 300 500 600]);
 
     % Use of the M_MAP library
@@ -58,42 +57,49 @@ function traceMap(fileIn)
     m_coast('patch',[.7 .7 .7],'edgecolor','none');
     m_grid;
     title("O2 \muM concentration during the trip",  'fontsize',10,...
-    'fontweight', 'bold', 'interpreter','none');
+    'fontweight', 'bold', 'interpreter','tex');
 
     % Colorbar
-    % [posX posY] height, data, [gap]
-    h = m_contfbar( [.3 .7],-.085, data,(0:maxVal),...
+    % [posX posY] height, o2, [gap]
+    h = m_contfbar( [.3 .7],-.085, o2,(0:maxVal),...
         'axfrac',.02,'endpiece','no','edgecolor','none',...
         'levels', step); 
     title(h,"O2 \muM concentration",  'fontsize',10,...
-    'fontweight', 'bold', 'interpreter','none');
+    'fontweight', 'bold', 'interpreter','tex');
 
     % Trip of the boat
-    m_line(co2.LONX, co2.LATX, 'color', 'black');
+    m_line(data.LONX, data.LATX, 'color', 'black');
 
     for i = 1:size(colorsO2)
     % Select of the color depending on the value of O2 µM
-    ids = find(round((data ./ step), 0) == i);
-    m_line(co2.LONX(ids), co2.LATX(ids),'LineStyle', 'none',...
+    ids = find(round((o2 ./ step), 0) == i);
+    m_line(data.LONX(ids), data.LATX(ids),'LineStyle', 'none',...
         'marker', '.', 'markersize', 5 ,'color', colorsO2(i,:));
     end
     
+    
     %% CO2 Map
-    maxVal = 300; % max value of CO2
-
     colorsCO2 = m_colmap('jet');
     % Get only the real data
-    data = real(co2.CO2_PHYS);
+    co2 = real(data.CO2_PHYS);
+    type = data.TYPE;
 
-    % We select the data > 0. The rest is the default data
-    ind = data > 0;
-    data = data(ind);
+    % We select the co2 == 'EQU'. The rest is the default data
+    ind = strcmp(type,'EQU');
+    co2 = co2(ind);
+%     i = find(co2 > 1000);
+%     for j=1:size(i) 
+%       fprintf(1, '%d  %f\n',i(j), co2(i(j)));
+%     end
+%    maxVal = max(co2); % maximum value of O2
+    minVal = 300;
+    maxVal = 800;
     step = maxVal / size(colorsCO2,1);
 
     disp("... Printing map");
 
     % Creating the figure for the map
-    map2 = figure('Name','CO2 Map','NumberTitle','off',...
+    figure('Name','CO2 Map','NumberTitle','off',...
     'Position',[400 300 500 600]);
 
     % Use of the M_MAP library
@@ -105,23 +111,22 @@ function traceMap(fileIn)
     'fontweight', 'bold', 'interpreter','none');
 
     % Colorbar
-    % [posX posY] height, data, [gap]
-    h = m_contfbar( [.3 .7],-.085, data,(0:maxVal),...
+    % [posX posY] height, co2, [gap]
+    h = m_contfbar( [.3 .7],-.085, co2,(minVal:maxVal),...
         'axfrac',.02,'endpiece','no','edgecolor','none',...
         'levels', step); 
     title(h,"CO2 concentration",  'fontsize',10,...
     'fontweight', 'bold', 'interpreter','none');
 
     % Trip of the boat
-    m_line(co2.LONX, co2.LATX, 'color', 'black');
+    m_line(data.LONX, data.LATX, 'color', 'black');
 
     for i = 1:size(colorsCO2)
-    % Select of the color depending on the value of O2 µM
-    ids = find(round((data ./ step), 0) == i);
-    m_line(co2.LONX(ids), co2.LATX(ids),'LineStyle', 'none',...
+    % Select of the color depending on the value of O2 uM
+    ids = find(round((co2 ./ step), 0) == i);
+    m_line(data.LONX(ids), data.LATX(ids),'LineStyle', 'none',...
         'marker', '.', 'markersize', 5 ,'color', colorsCO2(i,:));
     end
-
     
-    close Figure 1
+
 end
